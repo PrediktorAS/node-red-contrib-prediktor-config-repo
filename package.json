@@ -1,0 +1,24 @@
+{
+    "name": "node-red-contrib-prediktor",
+    "version": "1.0.0",
+    "description": "A collection of nodes to communicate with Config Repository",
+    "main": "main.js",
+    "scripts": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:PrediktorAS/node-red-contrib-prediktor.git"
+    },
+    "keywords": [
+        "prediktor"
+    ],
+    "author": "Elias Bakken",
+    "license": "Apache-2.0",
+    "node-red": {
+        "nodes": {
+            "get-nodes": "src/nodes/get-nodes.js",
+            "create-node": "src/nodes/create-node.js"
+        }
+    }
+}

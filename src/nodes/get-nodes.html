@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    RED.nodes.registerType('get-nodes',{
+        category: 'prediktor',
+        color: '#ed5a55',
+        defaults: {
+            name: {value:""},
+            server: {value: "", type: "remote-server"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "prediktor.png",
+        label: function() {
+            return this.name||"get-nodes";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="get-nodes">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="get-nodes">
+    <p>A node that gets all nodes from Config Repository</p>
+</script>
