@@ -18,6 +18,8 @@ module.exports = function(RED) {
                     type: 1
                 }
             };
+            msg.service = "ConfigurationRepository";
+            msg.method = "createNode";
             node.send(msg);
         });
     }

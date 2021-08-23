@@ -3,7 +3,7 @@
         category: 'config',
         defaults: {
             host: {value:"localhost",required:true},
-            port: {value:1234,required:true,validate:RED.validators.number()},
+            port: {value:8237,required:true,validate:RED.validators.number()},
         },
         label: function() {
             return this.host+":"+this.port;
