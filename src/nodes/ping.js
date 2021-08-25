@@ -1,21 +1,13 @@
 let utils = require('../utils/grpc');
 module.exports = function(RED) {
-    function GetNodesNode(config) {
+    function PingNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-            msg.payload = {
-                parentNodeId: {
-                    id: ""
-                },
-                pageNo: 0,
-                pageSize: 0
-            };
-            const service = "ConfigurationRepository";
-            const method = "getNodes";
-
+            msg.payload = {};
+            const method = "ping";
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
 
@@ -26,5 +18,5 @@ module.exports = function(RED) {
             });
         });
     }
-    RED.nodes.registerType("get-nodes",GetNodesNode);
+    RED.nodes.registerType("ping",PingNode);
 }

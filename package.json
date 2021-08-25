@@ -17,9 +17,14 @@
     "license": "Apache-2.0",
     "node-red": {
         "nodes": {
+            "ping": "src/nodes/ping.js",
             "get-nodes": "src/nodes/get-nodes.js",
             "create-node": "src/nodes/create-node.js",
             "remote-server": "src/nodes/remote-server.js"
         }
+    },
+    "dependencies": {
+        "@grpc/grpc-js": "^1.3.7",
+        "@grpc/proto-loader": "^0.6.4"
     }
 }
