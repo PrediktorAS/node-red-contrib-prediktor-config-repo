@@ -1,21 +1,22 @@
 <script type="text/javascript">
-    RED.nodes.registerType('ping',{
+    RED.nodes.registerType('get-node',{
         category: 'prediktor',
         color: '#ed5a55',
         defaults: {
-            name: {value:""},
-            server: {value: "", type: "remote-server"}
+            name: {value: ""},
+            server: {value: "", type: "remote-server"},
+            nodeid: {value: ""}
         },
         inputs:1,
         outputs:1,
         icon: "prediktor.png",
         label: function() {
-            return this.name||"Ping";
+            return this.name||"Get Node";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="ping">
+<script type="text/html" data-template-name="get-node">
     <div class="form-row">
         <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
         <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
@@ -24,8 +25,12 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row">
+        <label for="node-input-nodeid"><i class="fa fa-tag"></i> Id</label>
+        <input type="text" id="node-input-nodeid" placeholder="Id to get">
+    </div>
 </script>
 
-<script type="text/html" data-help-name="ping">
-    <p>A node that pings Config Repository</p>
+<script type="text/html" data-help-name="get-node">
+    <p>A node that gets a node in Config Repository</p>
 </script>

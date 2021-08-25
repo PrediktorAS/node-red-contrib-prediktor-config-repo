@@ -19,7 +19,10 @@
         "nodes": {
             "ping": "src/nodes/ping.js",
             "get-nodes": "src/nodes/get-nodes.js",
+            "get-node": "src/nodes/get-node.js",
             "create-node": "src/nodes/create-node.js",
+            "update-node": "src/nodes/update-node.js",
+            "delete-node": "src/nodes/delete-node.js",
             "remote-server": "src/nodes/remote-server.js"
         }
     },

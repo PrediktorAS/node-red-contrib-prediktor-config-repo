@@ -1,12 +1,11 @@
 let utils = require('../utils/grpc');
 module.exports = function(RED) {
-    function CreateNodeNode(config) {
+    function updateNodeNode(config) {
         RED.nodes.createNode(this, config);
         var node = this;
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-
             config.parentid = msg.parentid || config.parentid;
             config.nodeid = msg.nodeid || config.nodeid;
             config.nodename = msg.nodename || config.nodename;
@@ -27,7 +26,9 @@ module.exports = function(RED) {
                 }
             };
 
-            const method = "createNode";
+            console.log(msg);
+            
+            const method = "updateNode";
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
 
@@ -38,5 +39,5 @@ module.exports = function(RED) {
             });
         });
     }
-    RED.nodes.registerType("create-node", CreateNodeNode);
+    RED.nodes.registerType("update-node", updateNodeNode);
 }

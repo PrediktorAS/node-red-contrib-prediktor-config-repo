@@ -4,13 +4,14 @@
         color: '#ed5a55',
         defaults: {
             name: {value:""},
-            server: {value: "", type: "remote-server"}
+            server: {value: "", type: "remote-server"},
+            parentNodeId: {value:""}
         },
         inputs:1,
         outputs:1,
         icon: "prediktor.png",
         label: function() {
-            return this.name||"get-nodes";
+            return this.name||"Get Nodes";
         }
     });
 </script>
@@ -23,6 +24,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-parent-node-id"><i class="fa fa-tag"></i> Parent Id</label>
+        <input type="text" id="node-input-parent-node-id" placeholder="Parent Node Id (blank for root node)">
     </div>
 </script>
 
