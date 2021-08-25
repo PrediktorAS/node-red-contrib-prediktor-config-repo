@@ -1,10 +1,9 @@
 
-var currentPath = process.cwd();
-
 const grpc = require("@grpc/grpc-js");
 const loader = require("@grpc/proto-loader");
 
-protoFileName = currentPath+"/All.proto";
+protoFileName = __dirname+"/All.proto";
+
 const options = {
   keepCase: true,
   longs: String,
