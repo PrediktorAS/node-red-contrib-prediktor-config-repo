@@ -5,6 +5,7 @@
         defaults: {
             name: {value: ""},
             server: {value: "", type: "remote-server"},
+            nodeid: {value: ""},
             contenttype: {value: "binary"}
         },
         inputs:1,
@@ -24,6 +25,10 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-nodeid"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-nodeid" placeholder="Node Id">
     </div>
     <div class="form-row">
         <label for="node-input-contenttype"><i class="fa fa-tag"></i> Content type</label>

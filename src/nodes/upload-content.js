@@ -36,6 +36,7 @@ module.exports = function(RED) {
             client[method](msg.payload, function(err, data){
                 msg.payload = data;
                 msg.error = err;
+
                 node.send(msg);
             });
         });

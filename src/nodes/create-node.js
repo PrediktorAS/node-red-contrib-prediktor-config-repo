@@ -65,6 +65,8 @@ module.exports = function(RED) {
                 }
             }
 
+            console.log(msg.payload);
+
             const method = "createNode";
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
