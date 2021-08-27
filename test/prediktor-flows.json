@@ -1,0 +1,884 @@
+[
+    {
+        "id": "ca93d23b7478210e",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ec63868e817c42cc",
+        "type": "http request",
+        "z": "ca93d23b7478210e",
+        "name": "Call bkk-maas",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:5020/map_mindmanager",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 820,
+        "y": 700,
+        "wires": [
+            [
+                "fed6b7bce345d7c4"
+            ]
+        ]
+    },
+    {
+        "id": "43eb0ada1482fa8e",
+        "type": "function",
+        "z": "ca93d23b7478210e",
+        "name": "Create dataset",
+        "func": "csv_data = msg.payload[1];\ntxt_data = msg.payload[0];\ndelete msg.url;\nmsg.payload = {\n    \"signal_base64_csv\": csv_data,\n    \"sites_mindmanager_base64_csvs\": {'Dale': txt_data}\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 700,
+        "wires": [
+            [
+                "ec63868e817c42cc"
+            ]
+        ]
+    },
+    {
+        "id": "b9051bd4dd743541",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "1750875b2066b35b",
+        "type": "base64",
+        "z": "ca93d23b7478210e",
+        "name": "base64 encode",
+        "action": "",
+        "property": "payload",
+        "x": 820,
+        "y": 540,
+        "wires": [
+            [
+                "e80e2a71f3bfae57"
+            ]
+        ]
+    },
+    {
+        "id": "e80e2a71f3bfae57",
+        "type": "join",
+        "z": "ca93d23b7478210e",
+        "name": "Join files in an array",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1040,
+        "y": 540,
+        "wires": [
+            [
+                "43eb0ada1482fa8e"
+            ]
+        ]
+    },
+    {
+        "id": "d8d4fe740e07d371",
+        "type": "http request",
+        "z": "ca93d23b7478210e",
+        "name": "Download files",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 580,
+        "y": 540,
+        "wires": [
+            [
+                "1750875b2066b35b"
+            ]
+        ]
+    },
+    {
+        "id": "79ef2de4dbeb5ae3",
+        "type": "change",
+        "z": "ca93d23b7478210e",
+        "name": "Set TXT filename",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "ScadaProduksjon_Variable_2020-10-01T14-08-58.txt",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 300,
+        "wires": [
+            [
+                "2e86345614e734b0"
+            ]
+        ]
+    },
+    {
+        "id": "2e86345614e734b0",
+        "type": "function",
+        "z": "ca93d23b7478210e",
+        "name": "Build URL",
+        "func": "TOKEN=\"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\"\nFILE=msg.payload\nmsg.url=\"https://\"+TOKEN+\"@raw.githubusercontent.com/PrediktorAS/bkk-maas-config-test/main/input/\"+FILE\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 320,
+        "wires": [
+            [
+                "d8d4fe740e07d371"
+            ]
+        ]
+    },
+    {
+        "id": "bdc71516f205b53f",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 490,
+        "y": 320,
+        "wires": [
+            [
+                "79ef2de4dbeb5ae3",
+                "c3efff51bb343c2e"
+            ]
+        ]
+    },
+    {
+        "id": "c3efff51bb343c2e",
+        "type": "change",
+        "z": "ca93d23b7478210e",
+        "name": "Set CSV filename",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Dale.csv",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 360,
+        "wires": [
+            [
+                "2e86345614e734b0"
+            ]
+        ]
+    },
+    {
+        "id": "be2778a1704aef88",
+        "type": "base64",
+        "z": "ca93d23b7478210e",
+        "name": "base64 decode",
+        "action": "b64",
+        "property": "payload",
+        "x": 640,
+        "y": 860,
+        "wires": [
+            [
+                "b9051bd4dd743541"
+            ]
+        ]
+    },
+    {
+        "id": "fed6b7bce345d7c4",
+        "type": "function",
+        "z": "ca93d23b7478210e",
+        "name": "Pick NodeSet2 XML file",
+        "func": "msg.payload = msg.payload[\"enterprise_nodeset2_base64_xml\"];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 700,
+        "wires": [
+            [
+                "be2778a1704aef88"
+            ]
+        ]
+    },
+    {
+        "id": "d01a81e6b4585a8a",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 1060,
+        "wires": [
+            [
+                "2382e44accf4468f"
+            ]
+        ]
+    },
+    {
+        "id": "e2661337b897c05b",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "2cf6aeae2c2d690d",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 1120,
+        "wires": [
+            [
+                "021546b6a9df8b2c"
+            ]
+        ]
+    },
+    {
+        "id": "753286c35a1a4227",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "babbd70329a98dd8",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 1240,
+        "wires": [
+            [
+                "f1c642c66d155496"
+            ]
+        ]
+    },
+    {
+        "id": "9af16a02798cd45e",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "021546b6a9df8b2c",
+        "type": "get-nodes",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "x": 790,
+        "y": 1120,
+        "wires": [
+            [
+                "753286c35a1a4227"
+            ]
+        ]
+    },
+    {
+        "id": "2382e44accf4468f",
+        "type": "ping",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "x": 770,
+        "y": 1060,
+        "wires": [
+            [
+                "e2661337b897c05b"
+            ]
+        ]
+    },
+    {
+        "id": "f1c642c66d155496",
+        "type": "create-node",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "parentid": "",
+        "nodeid": "",
+        "nodename": "Node Name",
+        "description": "Node Description",
+        "nodedata": "NodeData",
+        "nodetype": "node",
+        "revisiontype": "namespaceDatabase",
+        "version": "",
+        "modelversion": "",
+        "timestamp": "0",
+        "backupsetid": "",
+        "x": 790,
+        "y": 1240,
+        "wires": [
+            [
+                "9af16a02798cd45e"
+            ]
+        ]
+    },
+    {
+        "id": "156c3806645b2c26",
+        "type": "delete-node",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "nodeid": "5598eca7-a1b5-4be4-b2a2-1b17b0f9a78a2",
+        "x": 790,
+        "y": 1360,
+        "wires": [
+            [
+                "a2b66731d0554656"
+            ]
+        ]
+    },
+    {
+        "id": "1da5f7f120b7afc9",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 1360,
+        "wires": [
+            [
+                "156c3806645b2c26"
+            ]
+        ]
+    },
+    {
+        "id": "a2b66731d0554656",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "a53d2a3e1d88673b",
+        "type": "update-node",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "parentid": "",
+        "nodeid": "6062bde7-04d9-42d3-bafc-dc26f1599d84",
+        "nodename": "Updated Node Name",
+        "description": "Updated Node Description",
+        "nodetype": "",
+        "x": 790,
+        "y": 1300,
+        "wires": [
+            [
+                "d2689d16f7772d67"
+            ]
+        ]
+    },
+    {
+        "id": "f85957de993d8622",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 1300,
+        "wires": [
+            [
+                "a53d2a3e1d88673b"
+            ]
+        ]
+    },
+    {
+        "id": "d2689d16f7772d67",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "e85ec188df6cf7c0",
+        "type": "get-node",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "nodeid": "6062bde7-04d9-42d3-bafc-dc26f1599d84",
+        "x": 780,
+        "y": 1180,
+        "wires": [
+            [
+                "9b5f2f4c5f77118f"
+            ]
+        ]
+    },
+    {
+        "id": "7125ca95edb08471",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 590,
+        "y": 1180,
+        "wires": [
+            [
+                "e85ec188df6cf7c0"
+            ]
+        ]
+    },
+    {
+        "id": "9b5f2f4c5f77118f",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "39a28d397e947289",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Create text",
+        "payloadType": "str",
+        "x": 460,
+        "y": 1540,
+        "wires": [
+            [
+                "28f6338027a4c808",
+                "bd2efcf4e4832b48"
+            ]
+        ]
+    },
+    {
+        "id": "e29e71aa5f0b7cbb",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "28f6338027a4c808",
+        "type": "base64",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 580,
+        "y": 1460,
+        "wires": [
+            [
+                "ab98265c3dbc84d7"
+            ]
+        ]
+    },
+    {
+        "id": "ab98265c3dbc84d7",
+        "type": "upload-content",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "contenttype": "Binary",
+        "x": 800,
+        "y": 1460,
+        "wires": [
+            [
+                "e29e71aa5f0b7cbb"
+            ]
+        ]
+    },
+    {
+        "id": "bd2efcf4e4832b48",
+        "type": "upload-content",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "contenttype": "Text",
+        "x": 800,
+        "y": 1540,
+        "wires": [
+            [
+                "4a773504208f77f4"
+            ]
+        ]
+    },
+    {
+        "id": "4a773504208f77f4",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "5997dfd67435e40d",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Create Store",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 530,
+        "y": 1780,
+        "wires": [
+            [
+                "24fedfb959364780"
+            ]
+        ]
+    },
+    {
+        "id": "389464798c09fc3a",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "24fedfb959364780",
+        "type": "create-node",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "parentid": "62fcceb4-a19d-459e-8152-4fecb312b557",
+        "nodeid": "",
+        "nodename": "Store node",
+        "description": "Store",
+        "nodedata": "NodeData",
+        "nodetype": "namespaceNodeset",
+        "revisiontype": "namespaceNodeset",
+        "version": "1.0.0",
+        "modelversion": "2.0.0",
+        "timestamp": "0",
+        "backupsetid": "",
+        "x": 730,
+        "y": 1780,
+        "wires": [
+            [
+                "389464798c09fc3a"
+            ]
+        ]
+    },
+    {
+        "id": "8319d0ad0d2b49d8",
+        "type": "create-node",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "server": "f6c195f9251206df",
+        "parentid": "5582ddaa-8be5-47cb-bdc3-5de1f7c7a331",
+        "nodeid": "",
+        "nodename": "Revision Node",
+        "description": "This is a Revision Node",
+        "nodedata": "RevisionData",
+        "nodetype": "undefined",
+        "revisiontype": "namespaceNodeset",
+        "version": "1.0.0",
+        "modelversion": "2.0.0",
+        "timestamp": "123",
+        "backupsetid": "",
+        "x": 720,
+        "y": 1900,
+        "wires": [
+            [
+                "992e0e786b4a877b"
+            ]
+        ]
+    },
+    {
+        "id": "1bc00adcc1e4da61",
+        "type": "inject",
+        "z": "ca93d23b7478210e",
+        "name": "Create Revision",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 520,
+        "y": 1900,
+        "wires": [
+            [
+                "8319d0ad0d2b49d8"
+            ]
+        ]
+    },
+    {
+        "id": "992e0e786b4a877b",
+        "type": "debug",
+        "z": "ca93d23b7478210e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 980,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "f6c195f9251206df",
+        "type": "remote-server",
+        "host": "10.100.86.237",
+        "port": "8237"
+    }
+]

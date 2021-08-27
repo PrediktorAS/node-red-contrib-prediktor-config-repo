@@ -23,7 +23,8 @@
             "create-node": "src/nodes/create-node.js",
             "update-node": "src/nodes/update-node.js",
             "delete-node": "src/nodes/delete-node.js",
-            "remote-server": "src/nodes/remote-server.js"
+            "remote-server": "src/nodes/remote-server.js",
+            "upload-content": "src/nodes/upload-content.js"
         }
     },
     "dependencies": {

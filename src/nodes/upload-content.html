@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    RED.nodes.registerType('upload-content',{
+        category: 'prediktor',
+        color: '#ed5a55',
+        defaults: {
+            name: {value: ""},
+            server: {value: "", type: "remote-server"},
+            contenttype: {value: "binary"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "prediktor.png",
+        label: function() {
+            return this.name||"Upload Content";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="upload-content">
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
+        <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-contenttype"><i class="fa fa-tag"></i> Content type</label>
+        <select id="node-input-contenttype">
+            <option>Binary</option>
+            <option>Text</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="upload-content">
+    <p>A node that uploads binary content to Config Repository</p>
+</script>

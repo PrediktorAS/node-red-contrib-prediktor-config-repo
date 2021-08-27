@@ -5,6 +5,7 @@ createnode = require("nodes/create-node");
 updatenode = require("nodes/update-node");
 deletenode = require("nodes/delete-node");
 remoteserver = require("nodes/remote-server");
+uploadcontent = require("nodes/upload-content");
 
 module.exports = function(RED){
     RED.nodes.registerType('ping', ping.PingNode);
@@ -14,4 +15,5 @@ module.exports = function(RED){
     RED.nodes.registerType('update-node', updatenode.UpdateNodeNode);
     RED.nodes.registerType('delete-node', deletenode.DeleteNodeNode);
     RED.nodes.registerType('remote-server', remoteserver.RemoteServerNode);
+    RED.nodes.registerType('upload-content', uploadcontent.uploadContentNode);
 }

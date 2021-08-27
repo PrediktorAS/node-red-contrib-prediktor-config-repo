@@ -9,13 +9,31 @@
             nodeid: {value: ""},
             nodename: {value: ""},
             description: {value: ""},
-            nodetype: {value: 1}
+            nodedata: {value: "NodeData"},
+            nodetype: {value: "undefined"},
+            revisiontype: {value: "unknownRevision"},
+            version: {value: ""},
+            modelversion: {value: ""},
+            timestamp: {value: 0, validate:RED.validators.number() },
+            backupsetid: {value: ""}
         },
         inputs:1,
         outputs:1,
         icon: "prediktor.png",
         label: function() {
             return this.name||"Create Node";
+        },
+        oneditprepare: function(){
+            $("#node-input-nodedata").on("change", function() {
+                if(this.value == "NodeData"){
+                    $(".row-nodetype").show();
+                    $(".row-revisiontype").hide();
+                }
+                else if(this.value == "RevisionData"){
+                    $(".row-nodetype").hide();
+                    $(".row-revisiontype").show();
+                }
+            });
         }
     });
 </script>
@@ -46,8 +64,49 @@
         <input type="text" id="node-input-description" placeholder="Description">
     </div>
     <div class="form-row">
-        <label for="node-input-nodetype"><i class="fa fa-tag"></i> Type</label>
-        <input type="text" id="node-input-nodetype" placeholder="Type">
+        <label for="node-input-nodedata"><i class="fa fa-tag"></i> Data</label>
+        <select id="node-input-nodedata" placeholder="Data">
+            <option>NodeData</option>
+            <option>RevisionData</option>
+        </select>
+    </div>
+    <div class="form-row row-nodetype">
+        <label for="node-input-nodetype"><i class="fa fa-tag"></i> NodeType</label>
+        <select id="node-input-nodetype" placeholder="NodeType">
+            <option>undefined</option>
+            <option>node</option>
+            <option>namespaceNodeset</option>
+            <option>hiveConfiguration</option>
+            <option>namespaceDatabase</option>
+            <option>transformationExpressions</option>
+        </select>
+    </div>
+    <div class="form-row row-revisiontype">
+        <label for="node-input-revisiontype"><i class="fa fa-tag"></i> RevisionType</label>
+        <select id="node-input-revisiontype" placeholder="RevisionType">
+            <option>unknown</option>
+            <option>namespaceNodeset</option>
+            <option>hiveConfiguration</option>
+            <option>namespaceDatabase</option>
+            <option>namespaceDatabase</option>
+            <option>transformationExpressions</option>
+        </select>
+    </div>
+    <div class="form-row row-revisiontype">
+        <label for="node-input-version"><i class="fa fa-tag"></i> Version</label>
+        <input id="node-input-version" placeholder="Version">
+    </div>
+    <div class="form-row row-revisiontype">
+        <label for="node-input-modelversion"><i class="fa fa-tag"></i> Model Version</label>
+        <input id="node-input-modelversion" placeholder="Model version">
+    </div>
+    <div class="form-row row-revisiontype">
+        <label for="node-input-timestamp"><i class="fa fa-tag"></i> Time Stamp</label>
+        <input id="node-input-timestamp" placeholder="Timestamp">
+    </div>
+    <div class="form-row row-revisiontype">
+        <label for="node-input-backupsetid"><i class="fa fa-tag"></i> Backup Set Id</label>
+        <input id="node-input-backupsetid" placeholder="BackupSetId">
     </div>
 </script>
 

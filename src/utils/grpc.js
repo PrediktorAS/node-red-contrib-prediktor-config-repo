@@ -22,7 +22,13 @@ function getClient(url){
     return client;
 }
 
+function getTimestamp(){
+    //const date = new proto.google.protobuf.Timestamp()
+    const date = Date.now();
+    return date;
+}
 
 module.exports = {
-    getClient: getClient
+    getClient: getClient,
+    getTimestamp: getTimestamp
 }

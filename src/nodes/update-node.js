@@ -25,6 +25,7 @@ module.exports = function(RED) {
                     type: 1
                 }
             };
+
             
             const method = "updateNode";
             const url = node.server.host+":"+node.server.port;
