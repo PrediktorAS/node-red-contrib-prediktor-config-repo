@@ -1,10 +1,10 @@
 <script type="text/javascript">
     RED.nodes.registerType('update-node',{
-        category: 'prediktor',
-        color: '#ed5a55',
+        category: 'Prediktor Config Repo',
+        color: '#E8E6E2',
         defaults: {
             name: {value: ""},
-            server: {value: "", type: "remote-server"},
+            server: {value: "", type: "prediktor-config-repository"},
             parentid: {value: ""},
             nodeid: {value: ""},
             nodename: {value: ""},
@@ -52,5 +52,12 @@
 </script>
 
 <script type="text/html" data-help-name="update-node">
-    <p>A node that updates a node in Config Repository</p>
+    <p>Updates a node/folder in Config Repository</p>
+    <h3>Details</h3>
+        <p>
+            Defining and maintaining a folder structure is important to keep 
+            track of your Stores and ultimately your Revisions (the content
+            itself). We call our "folders" "nodes", like in a graph. Use the
+            "Node"-nodes to work with the folders dynamically.
+        </p>
 </script>

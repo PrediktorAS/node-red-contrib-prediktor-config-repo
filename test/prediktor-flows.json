@@ -877,7 +877,7 @@
     },
     {
         "id": "f6c195f9251206df",
-        "type": "remote-server",
+        "type": "prediktor-config-repository",
         "host": "10.100.86.237",
         "port": "8237"
     }

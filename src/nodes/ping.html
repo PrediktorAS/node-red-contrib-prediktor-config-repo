@@ -1,10 +1,10 @@
 <script type="text/javascript">
     RED.nodes.registerType('ping',{
-        category: 'prediktor',
-        color: '#ed5a55',
+        category: 'Prediktor Config Repo',
+        color: '#E8E6E2',
         defaults: {
             name: {value:""},
-            server: {value: "", type: "remote-server"}
+            server: {value: "", type: "prediktor-config-repository"}
         },
         inputs:1,
         outputs:1,
@@ -27,5 +27,10 @@
 </script>
 
 <script type="text/html" data-help-name="ping">
-    <p>A node that pings Config Repository</p>
+    <p>Ping your Config Repository to check for a valid response</p>
+    <h3>Details</h3>
+        <p>
+            This is an easy way for you to test if your Config Repository
+            is active and if you can reach it.
+        </p>
 </script>
