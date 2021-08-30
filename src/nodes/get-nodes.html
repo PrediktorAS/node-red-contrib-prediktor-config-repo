@@ -1,10 +1,10 @@
 <script type="text/javascript">
     RED.nodes.registerType('get-nodes',{
-        category: 'prediktor',
-        color: '#ed5a55',
+        category: 'Prediktor Config Repo',
+        color: '#E8E6E2',
         defaults: {
             name: {value:""},
-            server: {value: "", type: "remote-server"},
+            server: {value: "", type: "prediktor-config-repository"},
             parentNodeId: {value:""}
         },
         inputs:1,
@@ -32,5 +32,12 @@
 </script>
 
 <script type="text/html" data-help-name="get-nodes">
-    <p>A node that gets all nodes from Config Repository</p>
+    <p>Gets all nodes/folders from Config Repository</p>
+    <h3>Details</h3>
+        <p>
+            Defining and maintaining a folder structure is important to keep 
+            track of your Stores and ultimately your Revisions (the content
+            itself). We call our "folders" "nodes", like in a graph. Use the
+            "Node"-nodes to work with the folders dynamically.
+        </p>
 </script>

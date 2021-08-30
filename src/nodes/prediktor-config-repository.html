@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('remote-server',{
+    RED.nodes.registerType('prediktor-config-repository',{
         category: 'config',
         defaults: {
             host: {value:"localhost",required:true},
@@ -11,7 +11,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="remote-server">
+<script type="text/html" data-template-name="prediktor-config-repository">
     <div class="form-row">
         <label for="node-config-input-host"><i class="fa fa-bookmark"></i> Host</label>
         <input type="text" id="node-config-input-host">

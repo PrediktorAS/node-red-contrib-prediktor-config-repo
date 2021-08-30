@@ -1,10 +1,10 @@
 <script type="text/javascript">
     RED.nodes.registerType('upload-content',{
-        category: 'prediktor',
-        color: '#ed5a55',
+        category: 'Prediktor Config Repo',
+        color: '#E8E6E2',
         defaults: {
             name: {value: ""},
-            server: {value: "", type: "remote-server"},
+            server: {value: "", type: "prediktor-config-repository"},
             nodeid: {value: ""},
             contenttype: {value: "binary"}
         },
@@ -40,5 +40,10 @@
 </script>
 
 <script type="text/html" data-help-name="upload-content">
-    <p>A node that uploads binary content to Config Repository</p>
+    <p>Upload binary content to Config Repository</p>
+    <h3>Details</h3>
+        <p>
+            You need to convert your content to binary and Base64-encode it 
+            in order to use this node.
+        </p>
 </script>
