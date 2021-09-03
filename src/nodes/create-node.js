@@ -21,7 +21,8 @@ module.exports = function(RED) {
             }
             config.backupsetid = msg.backupsetid || config.backupsetid;
 
-
+            console.log(config);
+            
             const nodetype = {
                 'undefined': 0,
                 'node': 1,

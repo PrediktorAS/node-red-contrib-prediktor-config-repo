@@ -4,7 +4,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "google/protobuf/any.proto";
 
-option csharp_namespace = "Apis.ConfigurationRepository.Service";
+option csharp_namespace = "Prediktor.ConfigurationRepository";
 
 package ConfigurationRepository;
 
@@ -410,27 +410,23 @@ enum ChangeTextType {
 
 
 
-
-
-// Shared messages for Apis gRPC services.
-
 message ByteStream {
-	bytes Bytes = 1;
+	bytes bytes = 1;
 }
 
 message StringArray {
-	repeated string Arr = 1;
+	repeated string arr = 1;
 }
 
 message ResultStatusArray {
-	repeated ResultStatus Results = 1;
-	bool Success = 2;
-	string Error = 3;
+	repeated ResultStatus results = 1;
+	bool success = 2;
+	string error = 3;
 }
 
 message ResultStatus {
-	bool Success = 1;
-	string Error = 2;
+	bool success = 1;
+	string error = 2;
 }
 
 message BooleanReply {
@@ -438,37 +434,37 @@ message BooleanReply {
 }
 
 message StringResult {
-	bool Success = 1;
-	string Value = 2;
+	bool success = 1;
+	string value = 2;
 }
 
 message BrowseFilter {
-	string Value = 1;
+	string value = 1;
 }
 
 message InstanceIds {
-	bool Success = 1;
-	string Error = 2;
-	repeated InstanceId Ids = 3;
+	bool success = 1;
+	string error = 2;
+	repeated InstanceId ids = 3;
 }
 
 message InstanceId {
-	string ParentId = 1;
-	string Id = 2;
+	string parentId = 1;
+	string id = 2;
 }
 message InstanceInfos {
-	repeated bool Success = 1;
-	repeated string Error = 2;
-	repeated InstanceInfo Infos = 3;
+	repeated bool success = 1;
+	repeated string error = 2;
+	repeated InstanceInfo infos = 3;
 }
 
 message InstanceInfo {
-	InstanceId Id = 1;
-	string Name = 2;
-	string FullName = 3;
-	string Description = 4;
-    bool IsRemovable = 5;
-	bool CanHaveChildren = 6;
+	InstanceId id = 1;
+	string name = 2;
+	string fullName = 3;
+	string description = 4;
+    bool isRemovable = 5;
+	bool canHaveChildren = 6;
 }
 
 message PropertyCollection {

@@ -24,11 +24,13 @@
             "update-node": "src/nodes/update-node.js",
             "delete-node": "src/nodes/delete-node.js",
             "prediktor-config-repository": "src/nodes/prediktor-config-repository.js",
-            "upload-content": "src/nodes/upload-content.js"
+            "upload-content": "src/nodes/upload-content.js",
+            "download-content": "src/nodes/download-content.js"
         }
     },
     "dependencies": {
         "@grpc/grpc-js": "^1.3.7",
-        "@grpc/proto-loader": "^0.6.4"
+        "@grpc/proto-loader": "^0.6.4",
+        "async": "^1.5.2"
     }
 }

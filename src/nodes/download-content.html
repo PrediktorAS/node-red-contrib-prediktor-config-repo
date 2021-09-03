@@ -1,24 +1,23 @@
 <script type="text/javascript">
-    RED.nodes.registerType('upload-content',{
+    RED.nodes.registerType('download-content',{
         category: 'Prediktor Config Repo',
         color: '#E8E6E2',
         defaults: {
             name: {value: ""},
             server: {value: "", type: "prediktor-config-repository"},
             nodeid: {value: ""},
-            contenttype: {value: "binary"},
-            testvalue: {value: "Test value"}
+            contenttype: {value: "binary"}
         },
         inputs:1,
         outputs:1,
         icon: "prediktor.png",
         label: function() {
-            return this.name||"Upload Content";
+            return this.name||"Download Content";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="upload-content">
+<script type="text/html" data-template-name="download-content">
     <div class="form-row">
         <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
         <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
@@ -38,17 +37,16 @@
             <option>Text</option>
         </select>
     </div>
-    <div class="form-row">
-        <label for="node-input-testvalue"><i class="fa fa-tag"></i> Test Value</label>
-        <input type="text" id="node-input-testvalue" placeholder="Test value">
-    </div>
 </script>
 
-<script type="text/html" data-help-name="upload-content">
-    <p>Upload binary content to Config Repository</p>
+<script type="text/html" data-help-name="download-content">
+    <p>download binary content to Config Repository</p>
     <h3>Details</h3>
         <p>
-            You need to convert your content to binary and Base64-encode it
-            in order to use this node.
+            Select the type of content to download from the dropdown,
+            theios can also be overridden by msg.content_type set to
+            "binary" or "text".
+            NodeId is the node to download content from.
+            This can also be overridden my msg.node_id
         </p>
 </script>
