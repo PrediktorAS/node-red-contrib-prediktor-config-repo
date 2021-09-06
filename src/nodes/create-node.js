@@ -6,7 +6,6 @@ module.exports = function(RED) {
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-
             config.parentid = msg.parentid || config.parentid;
             config.nodeid = msg.nodeid || config.nodeid;
             config.nodename = msg.nodename || config.nodename;
@@ -21,8 +20,6 @@ module.exports = function(RED) {
             }
             config.backupsetid = msg.backupsetid || config.backupsetid;
 
-            console.log(config);
-            
             const nodetype = {
                 'undefined': 0,
                 'node': 1,
@@ -65,8 +62,6 @@ module.exports = function(RED) {
                 	backupSetId: config.backupsetid
                 }
             }
-
-            console.log(msg.payload);
 
             const method = "createNode";
             const url = node.server.host+":"+node.server.port;

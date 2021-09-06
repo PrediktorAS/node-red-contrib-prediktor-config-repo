@@ -1,5 +1,4 @@
 let utils = require('../utils/grpc');
-var async = require('async');
 module.exports = function(RED) {
     function uploadContentNode(config) {
         RED.nodes.createNode(this, config);
@@ -46,7 +45,7 @@ module.exports = function(RED) {
                 call.end();
             }
 
-            async.series([runUploadChunk]);
+            runUploadChunk();
         });
     }
     RED.nodes.registerType("upload-content", uploadContentNode);

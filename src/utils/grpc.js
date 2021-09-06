@@ -2,7 +2,7 @@
 const grpc = require("@grpc/grpc-js");
 const loader = require("@grpc/proto-loader");
 
-protoFileName = __dirname+"/All.proto";
+protoFileName = __dirname+"/../protobuf/ConfigurationRepository.proto";
 
 const options = {
   keepCase: true,
@@ -22,13 +22,6 @@ function getClient(url){
     return client;
 }
 
-function getTimestamp(){
-    //const date = new proto.google.protobuf.Timestamp()
-    const date = Date.now();
-    return date;
-}
-
 module.exports = {
-    getClient: getClient,
-    getTimestamp: getTimestamp
+    getClient: getClient
 }

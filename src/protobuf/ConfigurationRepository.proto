@@ -2,7 +2,7 @@ syntax = "proto3";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
-import "google/protobuf/any.proto";
+import "PrediktorCommon.proto";
 
 option csharp_namespace = "Prediktor.ConfigurationRepository";
 
@@ -15,20 +15,20 @@ service ConfigurationRepository {
   rpc info(google.protobuf.Empty) returns (ConfigurationRepositoryDetails);
 
   rpc createNode (NodeRequest) returns (NodeResponse);
-  rpc updateNode (NodeRequest) returns (ResultStatus);
+  rpc updateNode (NodeRequest) returns (PrediktorCommon.Result);
   rpc getNodes (GetNodesRequest) returns (GetNodesResponse);
   rpc getNode (NodeId) returns (NodeDetail);
-  rpc deleteNode (NodeId) returns (ResultStatus);
+  rpc deleteNode (NodeId) returns (PrediktorCommon.Result);
 
-  rpc uploadBinaryContent (stream UploadContentRequest) returns (ResultStatus);
-  rpc uploadTextContent (stream UploadContentRequest) returns (ResultStatus);
+  rpc uploadBinaryContent (stream UploadContentRequest) returns (PrediktorCommon.Result);
+  rpc uploadTextContent (stream UploadContentRequest) returns (PrediktorCommon.Result);
 
-  rpc downloadBinaryContent (NodeId) returns (stream ByteStream);
-  rpc downloadTextContent (NodeId) returns (stream StringArray);
+  rpc downloadBinaryContent (NodeId) returns (stream PrediktorCommon.ByteStream);
+  rpc downloadTextContent (NodeId) returns (stream PrediktorCommon.StringArray);
 
   rpc compareNamespaces (NamespaceCompareRequest) returns (stream NamespaceCompareResult);
   rpc compareHiveConfig (HiveConfigCompareRequest) returns (stream HiveConfigCompareResult);
-  rpc compareTransformationExpressions (ProjectCompareRequest) returns (stream TransformationExpressionsCompareResult);
+  rpc compareVariableMappings (ProjectCompareRequest) returns (stream CompareVariableMappingsResult);
 
 }
 
@@ -38,7 +38,7 @@ message NodeId {
 
 message NodeIds {
 	repeated NodeId projectId = 1;
-	ResultStatus resultStatus = 2;
+	PrediktorCommon.Result result = 2;
 }
 
 message NodeRequest { 
@@ -54,7 +54,7 @@ message NodeRequest {
 
 message NodeResponse{
 	NodeId nodeId = 1;
-	ResultStatus resultStatus = 2;
+	PrediktorCommon.Result result = 2;
 }
 
 message GetNodesRequest {
@@ -70,7 +70,7 @@ message GetNodesResponse {
 	int32 nextPage = 4;
 	int32 pageSize = 5;
 	int32 totalCount = 6;
-	ResultStatus resultStatus = 7;
+	PrediktorCommon.Result result = 7;
 }
 
 message NodeDetail {
@@ -78,7 +78,7 @@ message NodeDetail {
 	string name = 2;
 	string description = 3;
 	google.protobuf.Timestamp date = 4;
-	ResultStatus resultStatus = 5;
+	PrediktorCommon.Result result = 5;
 	oneof data {
 		NodeData nodeData = 7;
 		RevisionData revisionData = 8;
@@ -97,6 +97,7 @@ message RevisionData {
 	string backupSetId = 5;
 }
 
+//Nodes (folders) and Stores
 enum ConfigProjectTypeEnum {
 	undefined = 0;
 	node = 1;
@@ -106,6 +107,7 @@ enum ConfigProjectTypeEnum {
 	transformationExpressions = 5;
 }
 
+//Revisions
 enum RevisionTypeEnum {
 	unknownRevision = 0;
 	namespaceNodesetRevision = 1;
@@ -124,8 +126,8 @@ message ConfigurationRepositoryDetails {
 message UploadContentRequest {
 	oneof request {
 		NodeId revisionId = 1;
-		ByteStream binaryChunk = 2;
-		StringArray textChunk = 3;
+		PrediktorCommon.ByteStream binaryChunk = 2;
+		PrediktorCommon.StringArray textChunk = 3;
 	}
 }
 
@@ -271,13 +273,17 @@ message ReferenceDescription {
 	bool isHierarchical = 7;
 }
 
-message Namespaces {
+message NamespacesMap {
 	map<string, NsIndexPresence> namespacesMap = 1;
 }
 
 message ModifiedNode {
 	IdAndBrowsename idAndBrowsename = 1;
 	ModifiedAttributes modifiedAttribute = 2;
+}
+
+message ModifiedNodes {
+	repeated ModifiedNode modifiedNodes = 1;
 }
 
 message ModifiedAttributes {
@@ -321,36 +327,32 @@ message SemPropertyLocalizedText {
 	bool isReadOnly = 3;
 }
 
-enum NamespaceCompareSwitch	{
-	allSwitch = 0;
-	namespacesSwitch = 1;
-	modifiedNodesSwitch = 2;
-	newReferencesSwitch = 3;
-	deletedReferencesSwitch = 4;
-	newNamespacesSwitch = 5;
-	deletedNamespacesSwitch = 6;
-	modifiedNamespacesSwitch = 7;
-	newNodesSwitch = 8;
-	deletedNodesSwitch = 9;
-	success = 10;
-	error = 11;
-	errorDetails = 12;
+
+
+message ModifiedNameses {
+	map<string, ModifiedNamespace> modNamespaces = 1;
+}
+
+message ModifiedNameseValues {
+	map<string, ModifiedValues> modNamespacesValues = 1;
 }
 
 message NamespaceCompareResult {
-	map<string, NsIndexPresence> namespaces = 1;
-	repeated ModifiedNode modifiedNodes  = 2;
-	ReferenceDescriptions newReferences = 3;
-	ReferenceDescriptions deletedReferences = 4;
-	map<string, ModifiedNamespace> newNamespaces = 5;
-	map<string, ModifiedNamespace> deletedNamespaces = 6;
-	map<string, ModifiedValues> modifiedNamespaces = 7;
-	SemTypeMembers newNodes = 8;
-	SemTypeMembers deletedNodes = 9;
-	bool success = 10;
-	string error = 11;
-	string errorDetails = 12;
-	NamespaceCompareSwitch memberSwitch = 13;
+	oneof result {
+		NamespacesMap namespaces = 1;
+		ModifiedNodes modifiedNodes  = 2;
+		ReferenceDescriptions newReferences = 3;
+		ReferenceDescriptions deletedReferences = 4;
+		ModifiedNameses newNamespaces = 5;
+		ModifiedNameses deletedNamespaces = 6;
+		ModifiedNameseValues modifiedNamespaces = 7;
+		SemTypeMembers newNodes = 8;
+		SemTypeMembers deletedNodes = 9;
+		bool hasDifferences = 10;
+		bool success = 11;
+		string error = 12;
+		string errorDetails = 13;
+	}
 }
 
 message NamespaceBackupSetsResult {
@@ -372,10 +374,11 @@ message ConfigurationBackupSet {
 	int64 timestamp = 2;
 }
 
-message TransformationExpressionsCompareResult {
+message CompareVariableMappingsResult {
 	oneof result {
 		DiffTextModel old = 1;
 		DiffTextModel new = 2;
+		bool hasDifferences = 3;
 		bool success = 10;
 		string error = 11;
 	}
@@ -399,97 +402,4 @@ enum ChangeTextType {
 	inserted = 2;
 	imaginary = 3;
 	modified = 4;
-}
-
-
-
-
-
-
-
-
-
-
-message ByteStream {
-	bytes bytes = 1;
-}
-
-message StringArray {
-	repeated string arr = 1;
-}
-
-message ResultStatusArray {
-	repeated ResultStatus results = 1;
-	bool success = 2;
-	string error = 3;
-}
-
-message ResultStatus {
-	bool success = 1;
-	string error = 2;
-}
-
-message BooleanReply {
-	bool value = 1;
-}
-
-message StringResult {
-	bool success = 1;
-	string value = 2;
-}
-
-message BrowseFilter {
-	string value = 1;
-}
-
-message InstanceIds {
-	bool success = 1;
-	string error = 2;
-	repeated InstanceId ids = 3;
-}
-
-message InstanceId {
-	string parentId = 1;
-	string id = 2;
-}
-message InstanceInfos {
-	repeated bool success = 1;
-	repeated string error = 2;
-	repeated InstanceInfo infos = 3;
-}
-
-message InstanceInfo {
-	InstanceId id = 1;
-	string name = 2;
-	string fullName = 3;
-	string description = 4;
-    bool isRemovable = 5;
-	bool canHaveChildren = 6;
-}
-
-message PropertyCollection {
-	repeated Properties PropertiesArray = 1;
-	bool Success = 2;
-	string Error = 3;
-}
-
-message Properties {
-	repeated Property PropArray = 1;
-	bool Success = 2;
-	string Error = 3;
-}
-
-message Property {
-	string Name = 1;
-	google.protobuf.Any Value = 2;
-	bool Readonly = 3;
-	string Description = 4;
-	uint32 Id = 5;
-	bool Success = 6;
-	string Error = 7;
-}
-
-message PropertiesWriteRequest {
-	string Id = 1;
-	Properties Properties = 2;
 }

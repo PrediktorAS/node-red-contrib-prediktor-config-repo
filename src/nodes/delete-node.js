@@ -6,18 +6,11 @@ module.exports = function(RED) {
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-
-            config.nodeid = msg.nodeid || config.nodeid;
-
-            msg.payload = {
-                id: config.nodeid
-            };
-
-            const method = "deleteNode";
+            const node_id = msg.node_id || config.nodeid;
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
-
-            client[method](msg.payload, function(err, data){
+          
+            client.deleteNode({id: node_id}, function(err, data){
                 msg.payload = data;
                 msg.error = err;
                 node.send(msg);

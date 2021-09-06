@@ -45,10 +45,13 @@
 </script>
 
 <script type="text/html" data-help-name="upload-content">
-    <p>Upload binary content to Config Repository</p>
+    <p>Upload binary or text content to Config Repository</p>
     <h3>Details</h3>
         <p>
-            You need to convert your content to binary and Base64-encode it
-            in order to use this node.
+          Select the type of content to download from the dropdown,
+          the content type can also be overridden by msg.content_type set to
+          "binary" or "text".
+          NodeId is the node to upload content to.
+          This field can also be overridden my msg.node_id.
         </p>
 </script>
