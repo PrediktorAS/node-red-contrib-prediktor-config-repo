@@ -6,17 +6,17 @@ module.exports = function(RED) {
     this.server = RED.nodes.getNode(config.server);
 
     node.on('input', function(msg) {
-      const node_id = msg.payload || config.nodeid;
-      const method = (config.contenttype == "Binary") ? "downloadBinaryContent" : "downloadTextContent";
+      const nodeId = msg.nodeId || config.nodeId;
+      const method = (config.contentType == "Binary") ? "downloadBinaryContent" : "downloadTextContent";
       const url = node.server.host + ":" + node.server.port;
       const client = utils.getClient(url);
 
       var chunks = [];
       var call = client[method]({
-        id: node_id
+        id: nodeId
       });
       call.on('data', function(chunk) {
-        if (config.contenttype == "Binary") {
+        if (config.contentType == "Binary") {
           chunks.push(chunk.bytes);
         }
         else{
@@ -24,7 +24,7 @@ module.exports = function(RED) {
         }
       });
       call.on('end', function() {
-        if (config.contenttype == "Binary")
+        if (config.contentType == "Binary")
           msg.payload = Buffer.concat(chunks);
         else
           msg.payload = chunks.join();

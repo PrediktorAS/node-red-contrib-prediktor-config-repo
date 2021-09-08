@@ -6,12 +6,10 @@ module.exports = function(RED) {
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-            msg.payload = {};
-            const method = "ping";
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
 
-            client[method](msg.payload, function(err, data){
+            client.ping({}, function(err, data){
                 msg.payload = data;
                 msg.error = err;
                 node.send(msg);

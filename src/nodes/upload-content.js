@@ -7,14 +7,14 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             var data;
-            if(config.contenttype == "Binary")
-                data = msg.data || Buffer.from(config.testvalue, "utf-8");
+            if(config.contentType == "Binary")
+                data = msg.data || Buffer.from(config.testValue, "utf-8");
             else
-                data = msg.data || config.testvalue;
-            const node_id = msg.node_id || config.nodeid;
+                data = msg.data || config.testValue;
+            const nodeId = msg.nodeId || config.nodeId;
 
             var chunks = [
-                {  revisionId: { id: node_id } },
+                {  revisionId: { id: nodeId } },
             ];
 
             const chunk_size = 4000000; // 4 MB
@@ -22,13 +22,13 @@ module.exports = function(RED) {
             var i = 0;
             while(i < data_len){
                 chunk = data.slice(i, i += data_len)
-                if(config.contenttype == "Binary")
+                if(config.contentType == "Binary")
                     chunks.push({ binaryChunk: { bytes: chunk } });
                 else
                     chunks.push({  textChunk: { arr: [chunk] } });
             }
 
-            const method = (config.contenttype == "Binary") ? "uploadBinaryContent" : "uploadTextContent";
+            const method = (config.contentType == "Binary") ? "uploadBinaryContent" : "uploadTextContent";
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
 

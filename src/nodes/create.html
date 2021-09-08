@@ -1,0 +1,141 @@
+<script type="text/javascript">
+  RED.nodes.registerType('create', {
+    category: 'Prediktor Config Repo',
+    color: '#E8E6E2',
+    defaults: {
+      name: {
+        value: ""
+      },
+      server: {
+        value: "",
+        type: "prediktor-config-repository"
+      },
+      parentId: {
+        value: ""
+      },
+      nodeName: {
+        value: ""
+      },
+      description: {
+        value: ""
+      },
+      nodeData: {
+        value: "NodeData"
+      },
+      nodeType: {
+        value: "node"
+      },
+      revisionType: {
+        value: "unknownRevision"
+      },
+      version: {
+        value: ""
+      },
+      modelVersion: {
+        value: ""
+      },
+      timestamp: {
+        value: 0,
+        validate: RED.validators.number()
+      },
+      backupSetId: {
+        value: ""
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "prediktor.png",
+    label: function() {
+      return this.name || "Create";
+    },
+    oneditprepare: function() {
+      $("#node-input-nodeData").on("change", function() {
+        if (this.value == "NodeData") {
+          $(".row-nodetype").show();
+          $(".row-revisiontype").hide();
+        } else if (this.value == "RevisionData") {
+          $(".row-nodetype").hide();
+          $(".row-revisiontype").show();
+        }
+      });
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="create">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
+    <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-parentId"><i class="fa fa-tag"></i> Parent Id</label>
+    <input type="text" id="node-input-parentId" placeholder="Parent Id">
+  </div>
+  <div class="form-row">
+    <label for="node-input-nodeName"><i class="fa fa-tag"></i> Node Name</label>
+    <input type="text" id="node-input-nodeName" placeholder="Node Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-description"><i class="fa fa-tag"></i> Description</label>
+    <input type="text" id="node-input-description" placeholder="Description">
+  </div>
+  <div class="form-row">
+    <label for="node-input-nodeData"><i class="fa fa-tag"></i> Data</label>
+    <select id="node-input-nodeData" placeholder="Data">
+      <option>NodeData</option>
+      <option>RevisionData</option>
+    </select>
+  </div>
+  <div class="form-row row-nodetype">
+    <label for="node-input-nodeType"><i class="fa fa-tag"></i> NodeType</label>
+    <select id="node-input-nodeType" placeholder="NodeType">
+      <option>node</option>
+      <option>namespaceNodeset</option>
+      <option>hiveConfiguration</option>
+      <option>namespaceDatabase</option>
+      <option>transformationExpressions</option>
+    </select>
+  </div>
+  <div class="form-row row-revisiontype">
+    <label for="node-input-revisionType"><i class="fa fa-tag"></i> RevisionType</label>
+    <select id="node-input-revisionType" placeholder="RevisionType">
+      <option>unknown</option>
+      <option>namespaceNodeset</option>
+      <option>hiveConfiguration</option>
+      <option>namespaceDatabase</option>
+      <option>namespaceDatabase</option>
+      <option>transformationExpressions</option>
+    </select>
+  </div>
+  <div class="form-row row-revisiontype">
+    <label for="node-input-version"><i class="fa fa-tag"></i> Version</label>
+    <input id="node-input-version" placeholder="Version">
+  </div>
+  <div class="form-row row-revisiontype">
+    <label for="node-input-modelVersion"><i class="fa fa-tag"></i> Model Version</label>
+    <input id="node-input-modelVersion" placeholder="Model version">
+  </div>
+  <div class="form-row row-revisiontype">
+    <label for="node-input-timestamp"><i class="fa fa-tag"></i> Time Stamp</label>
+    <input id="node-input-timestamp" placeholder="Timestamp">
+  </div>
+  <div class="form-row row-revisiontype">
+    <label for="node-input-backupSetId"><i class="fa fa-tag"></i> Backup Set Id</label>
+    <input id="node-input-backupSetId" placeholder="BackupSetId">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="create">
+  <p>Creates a root node/folder, a store or a revision in Config Repository</p>
+  <h3>Details</h3>
+  <p>
+    Defining and maintaining a folder structure is important to keep
+    track of your Stores and ultimately your Revisions (the content
+    itself). We call our "folders" "nodes", like in a graph. Use the
+    "Node"-nodes to work with the folders dynamically.
+  </p>
+</script>

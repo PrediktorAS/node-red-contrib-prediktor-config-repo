@@ -5,9 +5,9 @@
         defaults: {
             name: {value: ""},
             server: {value: "", type: "prediktor-config-repository"},
-            nodeid: {value: ""},
-            contenttype: {value: "binary"},
-            testvalue: {value: "Test value"}
+            nodeId: {value: ""},
+            contentType: {value: "binary"},
+            testValue: {value: "Test value"}
         },
         inputs:1,
         outputs:1,
@@ -28,19 +28,19 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-nodeid"><i class="fa fa-tag"></i> Node Id</label>
-        <input type="text" id="node-input-nodeid" placeholder="Node Id">
+        <label for="node-input-nodeId"><i class="fa fa-tag"></i> Node Id</label>
+        <input type="text" id="node-input-nodeId" placeholder="Node Id">
     </div>
     <div class="form-row">
-        <label for="node-input-contenttype"><i class="fa fa-tag"></i> Content type</label>
-        <select id="node-input-contenttype">
+        <label for="node-input-contentType"><i class="fa fa-tag"></i> Content type</label>
+        <select id="node-input-contentType">
             <option>Binary</option>
             <option>Text</option>
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-testvalue"><i class="fa fa-tag"></i> Test Value</label>
-        <input type="text" id="node-input-testvalue" placeholder="Test value">
+        <label for="node-input-testValue"><i class="fa fa-tag"></i> Test Value</label>
+        <input type="text" id="node-input-testValue" placeholder="Test value">
     </div>
 </script>
 
@@ -52,6 +52,6 @@
           the content type can also be overridden by msg.content_type set to
           "binary" or "text".
           NodeId is the node to upload content to.
-          This field can also be overridden my msg.node_id.
+          This field can also be overridden my msg.nodeId.
         </p>
 </script>
