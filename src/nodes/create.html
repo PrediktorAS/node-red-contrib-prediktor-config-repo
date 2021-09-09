@@ -23,10 +23,10 @@
         value: "NodeData"
       },
       nodeType: {
-        value: "node"
+        value: "1"
       },
       revisionType: {
-        value: "unknownRevision"
+        value: "1"
       },
       version: {
         value: ""
@@ -93,22 +93,20 @@
   <div class="form-row row-nodetype">
     <label for="node-input-nodeType"><i class="fa fa-tag"></i> NodeType</label>
     <select id="node-input-nodeType" placeholder="NodeType">
-      <option>node</option>
-      <option>namespaceNodeset</option>
-      <option>hiveConfiguration</option>
-      <option>namespaceDatabase</option>
-      <option>transformationExpressions</option>
+      <option value="1">Node</option>
+      <option value="2">Namespace Nodeset</option>
+      <option value="3">Hive Configuration</option>
+      <option value="4">Namespace Database</option>
+      <option value="5">variableMappings</option>
     </select>
   </div>
   <div class="form-row row-revisiontype">
     <label for="node-input-revisionType"><i class="fa fa-tag"></i> RevisionType</label>
     <select id="node-input-revisionType" placeholder="RevisionType">
-      <option>unknown</option>
-      <option>namespaceNodeset</option>
-      <option>hiveConfiguration</option>
-      <option>namespaceDatabase</option>
-      <option>namespaceDatabase</option>
-      <option>transformationExpressions</option>
+      <option value="1">Namespace Nodeset Revision</option>
+      <option value="2">Hive Configuration Revision</option>
+      <option value="3">NamespaceDatabase Revision</option>
+      <option value="4">Variable Mappings Revision</option>
     </select>
   </div>
   <div class="form-row row-revisiontype">

@@ -15,24 +15,9 @@ module.exports = function(RED) {
         const version = msg.version || config.version;
         const modelVersion = msg.modelVersion || config.modelVersion;
         const timestamp = parseInt(msg.timestamp || config.timestamp);
-        config.backupsetid = msg.backupsetid || config.backupsetid;
-
-        const nodeTypeId = {
-          'undefined': 0,
-          'node': 1,
-          'namespaceNodeset': 2,
-          'hiveConfiguration': 3,
-          'namespaceDatabase': 4,
-          'transformationExpressions': 5
-        } [nodeType];
-
-        const revisionTypeId = {
-          'unknown': 0,
-          'namespaceNodeset': 1,
-          'hiveConfiguration': 2,
-          'namespaceDatabase': 3,
-          'transformationExpressions': 4
-        } [revisionType];
+        const backupSetId = msg.backupSetId || config.backupSetId;
+        const nodeTypeId = parseInt(nodeType);
+        const revisionTypeId = parseInt(revisionType);
 
         let nodeRequest = {
           parentId: {
