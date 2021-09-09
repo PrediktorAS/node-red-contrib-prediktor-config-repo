@@ -11,7 +11,7 @@
         "url": "git@github.com:PrediktorAS/node-red-contrib-prediktor.git"
     },
     "keywords": [
-        "prediktor", "keywords"
+        "prediktor", "node-red"
     ],
     "author": "Elias Bakken",
     "license": "Apache-2.0",
