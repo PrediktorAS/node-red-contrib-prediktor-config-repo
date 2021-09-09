@@ -28,7 +28,7 @@ service ConfigurationRepository {
 
   rpc compareNamespaces (NamespaceCompareRequest) returns (stream NamespaceCompareResult);
   rpc compareHiveConfig (HiveConfigCompareRequest) returns (stream HiveConfigCompareResult);
-  rpc compareVariableMappings (ProjectCompareRequest) returns (stream CompareVariableMappingsResult);
+  rpc compareVariableMappings (RevisionCompareRequest) returns (stream CompareVariableMappingsResult);
 
 }
 
@@ -104,7 +104,7 @@ enum ConfigProjectTypeEnum {
 	namespaceNodeset = 2;
 	hiveConfiguration = 3;
 	namespaceDatabase = 4;
-	transformationExpressions = 5;
+	variableMappings = 5;
 }
 
 //Revisions
@@ -113,7 +113,7 @@ enum RevisionTypeEnum {
 	namespaceNodesetRevision = 1;
 	hiveConfigurationRevision = 2;
 	namespaceDatabaseRevision = 3;
-	transformationExpressionsRevision = 4;
+	variableMappingsRevision = 4;
 }
 
 message ConfigurationRepositoryDetails {
@@ -138,7 +138,7 @@ message NamespaceCompareRequest {
 	bool excludeValueSourceAttributes = 4;
 }
 
-message ProjectCompareRequest {
+message RevisionCompareRequest {
 	string baseRevisionId = 1;
 	string compareRevisionId = 2;
 }
