@@ -1,0 +1,91 @@
+<script type="text/javascript">
+  RED.nodes.registerType('compare-namespaces', {
+    category: 'Prediktor Config Repo',
+    color: '#E8E6E2',
+    defaults: {
+      name: {
+        value: ""
+      },
+      server: {
+        value: "",
+        type: "prediktor-config-repository"
+      },
+      baseRevisionId: {
+        value: ""
+      },
+      compareRevisionId: {
+        value: ""
+      },
+      configProjectType: {
+        value: 2
+      },
+      excludeValueSourceAttributes: {
+        value: false
+      }
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: "prediktor.png",
+    label: function() {
+      return this.name || "Compare Namespaces";
+    }
+  });
+</script>
+
+<script type="text/html" data-template-name="compare-namespaces">
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+    <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+  </div>
+  <div class="form-row">
+    <label for="node-input-baseRevisionId"><i class="fa fa-link"></i> Base Revision Id</label>
+    <input type="text" id="node-input-baseRevisionId" placeholder="baseRevisionId">
+  </div>
+  <div class="form-row">
+    <label for="node-input-compareRevisionId"><i class="fa fa-archive"></i> Compare Revision Id</label>
+    <input type="text" id="node-input-compareRevisionId" placeholder="compareRevisionId">
+  </div>
+  <div class="form-row">
+    <label for="node-input-configProjectType"><i class="fa fa-tag"></i> Config Project Type</label>
+    <select id="node-input-configProjectType" placeholder="configProjectType">
+      <option value="1">Node</option>
+      <option value="2">Namespace Nodeset</option>
+      <option value="3">Hive Configuration</option>
+      <option value="4">Namespace Database</option>
+      <option value="5">Variable Mappings</option>
+    </select>
+  </div>
+  <div class="form-row row-configRepoNamespaceCompare">
+    <label for="node-input-excludeValueSourceAttributes"><i class="fa fa-tag"></i> Exclude Value Source Attributes</label>
+    <input type="checkbox" id="node-input-excludeValueSourceAttributes" placeholder="False">
+  </div>
+</script>
+
+<script type="text/html" data-help-name="compare-namespaces">
+  <p>Compare two namespaces</p>
+  <h3>Details</h3>
+  <p>
+    Supply the ID of two revision nodes
+    to compare. The Project type can be one of
+    the following:
+  <ul>
+    <li>node: 1</li>
+    <li>namespaceNodeset: 2</li>
+    <li>hiveConfiguration: 3</li>
+    <li>namespaceDatabase: 4</li>
+    <li>variableMappings: 5</li>
+  </ul>
+  </p>
+  Fields that can be overridden in the msg object:
+  <ul>
+    <li>baseRevisionId: string</li>
+    <li>compareRevisionId: string</li>
+    <li>configProjectType: int</li>
+    <li>excludeValueSourceAttributes: bool</li>
+  </ul>
+  The payload returned is an array with multiple results.
+</script>

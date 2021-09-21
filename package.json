@@ -23,7 +23,8 @@
             "delete": "src/nodes/delete.js",
             "prediktor-config-repository": "src/nodes/prediktor-config-repository.js",
             "upload-content": "src/nodes/upload-content.js",
-            "download-content": "src/nodes/download-content.js"
+            "download-content": "src/nodes/download-content.js",
+            "compare-namespaces": "src/nodes/compare-namespaces.js"
         }
     },
     "dependencies": {
