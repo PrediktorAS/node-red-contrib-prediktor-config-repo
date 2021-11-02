@@ -16,7 +16,7 @@
     "node-red": {
         "nodes": {
             "ping": "src/nodes/ping.js",
-            "get-all": "src/nodes/get-all.js",
+            "get-nodes": "src/nodes/get-nodes.js",
             "get": "src/nodes/get.js",
             "create": "src/nodes/create.js",
             "update": "src/nodes/update.js",
