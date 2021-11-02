@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  RED.nodes.registerType('get-all', {
+  RED.nodes.registerType('get-nodes', {
     category: 'Prediktor Config Repo',
     color: '#E8E6E2',
     defaults: {
@@ -10,7 +10,7 @@
         value: "",
         type: "prediktor-config-repository"
       },
-      parentNodeId: {
+      parentId: {
         value: ""
       }
     },
@@ -18,12 +18,12 @@
     outputs: 1,
     icon: "prediktor.png",
     label: function() {
-      return this.name || "Get All";
+      return this.name || "Get Nodes";
     }
   });
 </script>
 
-<script type="text/html" data-template-name="get-all">
+<script type="text/html" data-template-name="get-nodes">
   <div class="form-row">
     <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
     <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
@@ -33,18 +33,20 @@
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
   <div class="form-row">
-    <label for="node-input-parent-node-id"><i class="fa fa-tag"></i> Parent Id</label>
-    <input type="text" id="node-input-parent-node-id" placeholder="Parent Node Id (blank for root node)">
+    <label for="node-input-parentId"><i class="fa fa-tag"></i> Parent Id</label>
+    <input type="text" id="node-input-parentId" placeholder="Parent Node Id (blank for root node)">
   </div>
+  <div class="form-tips"><b>Tip:</b> You can transmit this as part of the msg, as msg.parentId</div>
 </script>
 
-<script type="text/html" data-help-name="get-all">
-  <p>Gets all nodes/folders from Config Repository</p>
+<script type="text/html" data-help-name="get-nodes">
+  <p>Get all children for a node</p>
   <h3>Details</h3>
   <p>
-    Defining and maintaining a folder structure is important to keep
-    track of your Stores and ultimately your Revisions (the content
-    itself). We call our "folders" "nodes", like in a graph. Use the
-    "Node"-nodes to work with the folders dynamically.
+    Folders will return its children, either of kind Folder or Store.
+    Stores will return its revisions.
+  </p>
+  <p>
+    <code>msg.parentId</code> is an allowed input and will be sent as part of the request. You can also leave it blank for the root node.
   </p>
 </script>

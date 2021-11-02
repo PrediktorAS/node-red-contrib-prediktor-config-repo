@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-prediktor-config-repo",
-    "version": "1.0.4",
+    "version": "1.0.6",
     "description": "A collection of nodes to communicate with Prediktor Configuration Repository",
     "main": "src/main.js",
     "repository": {
@@ -16,7 +16,7 @@
     "node-red": {
         "nodes": {
             "ping": "src/nodes/ping.js",
-            "get-all": "src/nodes/get-all.js",
+            "get-nodes": "src/nodes/get-nodes.js",
             "get": "src/nodes/get.js",
             "create": "src/nodes/create.js",
             "update": "src/nodes/update.js",

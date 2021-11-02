@@ -1,15 +1,15 @@
 let utils = require('../utils/grpc');
 module.exports = function(RED) {
-    function GetAllNode(config) {
+    function GetAllNodes(config) {
         RED.nodes.createNode(this,config);
         var node = this;
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-            const parentNodeId = msg.parentNodeId || config.parentNodeId;
+            const parentId = msg.parentId || config.parentId;
             const getNodesRequest = {
                 parentNodeId: {
-                    id: parentNodeId
+                    id: parentId
                 },
                 pageNo: 0,
                 pageSize: 0
@@ -25,5 +25,5 @@ module.exports = function(RED) {
             });
         });
     }
-    RED.nodes.registerType("get-all",GetAllNode);
+    RED.nodes.registerType("get-nodes",GetAllNodes);
 }
