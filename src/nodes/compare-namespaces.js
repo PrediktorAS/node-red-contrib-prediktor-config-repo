@@ -6,14 +6,14 @@ module.exports = function(RED) {
     this.server = RED.nodes.getNode(config.server);
     this.baseRevisionId = config.baseRevisionId;
     this.compareRevisionId = config.compareRevisionId;
-    this.configProjectType = config.configProjectType;
+    this.nodeType = config.nodeType;
     this.excludeValueSourceAttributes = config.excludeValueSourceAttributes;
 
     node.on('input', function(msg) {
       let namespaceCompareRequest = {
         baseRevisionId: msg.baseRevisionId || node.baseRevisionId,
         compareRevisionId: msg.compareRevisionId || node.compareRevisionId,
-        configProjectType: msg.configProjectType || node.configProjectType,
+        nodeType: msg.nodeType || node.nodeType,
         excludeValueSourceAttributes: msg.excludeValueSourceAttributes || node.excludeValueSourceAttributes
       };
 
