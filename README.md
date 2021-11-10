@@ -7,7 +7,7 @@
 [Read more at the Prediktor Documentation Site](https://docs.prediktor.com)
 
 ## Config Repository
-The Configuration Repository (CR) is a standalone service for backups of:
+The Configuration Repository (CR) is a self-contained service for managing backups of:
 - Ua Namespace nodeset files
 - Apis Variable mapping files
 - Apis Hive configuration files
