@@ -1,8 +1,50 @@
-# node-red-contrib-prediktor-config-repo
+# A Node-Red plugin for working with the Configuration Repository of Prediktor APIS/EDGE
 
-This set of nodes allows users to crate, read, update and delete
-nodes in Prediktors Apis software. There are also nodes for uploading and
-downloading binary and text content.
+### What is Node-Red?
+[Read more at the Official Site](https://nodered.org/)
+
+### What is Prediktor APIS/EDGE?
+[Read more at the Prediktor Documentation Site](https://docs.prediktor.com)
+
+## Config Repository
+The Configuration Repository (CR) is a standalone service for backups of:
+- Ua Namespace nodeset files
+- Apis Variable mapping files
+- Apis Hive configuration files
+
+CR can compare different versions of backups to each other.
+
+The structure inside CR is organized as a hierachy 
+- Level 1: Folders
+- Level 2: Stores
+- Level 3: Revisions
+- Level 4: Content
+
+### Folders
+Folders can be nested to the users choosing. Only folders can be at the root of the repository. The users are free to organize a folder hierachy. 
+
+### Stores
+Stores are containers for Revisions (backups). A store is of one specific type, `Namespace`, `Variable Mapping` or `Hive Configuration`. 
+- A Store of type `Namespace` can store nodeset2.xml file only.
+- A Store of type `Variable Mapping` can store Apis hive config files only (text).
+- A Store of type `Hive Config` can store Hive configuration backups only (zip).
+
+### Revisions
+Revisions can be added to Stores only, and must be of the same type as the Store. A Revision is a placeholder for an actual backup (Content). The revision contains metadata for the backup like, name, description, version, date and more. 
+
+A Revisions type must correspond to the type of the Store it belongs to. I.e. a Revision for a namespace can only belong to a Store for namespaces.
+
+### Content
+Content is an actual backup file. Content is always assosiated with a Revision.
+
+A Content file might be:
+- nodeset2.xml file for an Ua Namespace
+- Hive config text file for Variable Mapping
+- Hive backup zip file for Hive Configuration
+
+
+## Compare Revisions
+Revisions in the same Store can be compared to one another. One revision is selected as base, the other as "compare to". The result will be sets of Added/Deleted/Modified from the viewpoint of the base. The diff-results for the 3 different types are different.
 
 ## Sample flow
 
