@@ -16,7 +16,7 @@
       compareRevisionId: {
         value: ""
       },
-      configProjectType: {
+      nodeType: {
         value: 2
       },
       excludeValueSourceAttributes: {
@@ -50,8 +50,8 @@
     <input type="text" id="node-input-compareRevisionId" placeholder="compareRevisionId">
   </div>
   <div class="form-row">
-    <label for="node-input-configProjectType"><i class="fa fa-tag"></i> Config Project Type</label>
-    <select id="node-input-configProjectType" placeholder="configProjectType">
+    <label for="node-input-nodeType"><i class="fa fa-tag"></i> Config Project Type</label>
+    <select id="node-input-nodeType" placeholder="nodeType">
       <option value="1">Node</option>
       <option value="2">Namespace Nodeset</option>
       <option value="3">Hive Configuration</option>
@@ -84,7 +84,7 @@
   <ul>
     <li>baseRevisionId: string</li>
     <li>compareRevisionId: string</li>
-    <li>configProjectType: int</li>
+    <li>nodeType: int</li>
     <li>excludeValueSourceAttributes: bool</li>
   </ul>
   The payload returned is an array with multiple results.
