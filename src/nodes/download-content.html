@@ -40,13 +40,13 @@
 </script>
 
 <script type="text/html" data-help-name="download-content">
-    <p>download binary content to Config Repository</p>
+    <p>Download binary or text content from a predefined node in Config Repository</p>
     <h3>Details</h3>
-        <p>
-            Select the type of content to download from the dropdown,
-            the content type can also be overridden by msg.content_type set to
-            "binary" or "text".
-            NodeId is the node to download content from.
-            This can also be overridden my msg.nodeId
-        </p>
+    <b>Allowed input</b>
+    <ul>
+      <li><code>msg.nodeId</code> The Id of the Node you want to download from</li>
+    </ul>
+    <p>
+        Select the type of content to download from the dropdown. It is a part of the node config, and can not be changed by the msg.
+    </p>
 </script>

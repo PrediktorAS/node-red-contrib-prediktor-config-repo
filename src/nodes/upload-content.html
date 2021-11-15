@@ -6,8 +6,7 @@
             name: {value: ""},
             server: {value: "", type: "prediktor-config-repository"},
             nodeId: {value: ""},
-            contentType: {value: "binary"},
-            testValue: {value: "Test value"}
+            contentType: {value: "binary"}
         },
         inputs:1,
         outputs:1,
@@ -38,25 +37,17 @@
             <option>Text</option>
         </select>
     </div>
-    <div class="form-row">
-        <label for="node-input-testValue"><i class="fa fa-tag"></i> Test Value</label>
-        <input type="text" id="node-input-testValue" placeholder="Test value">
-    </div>
 </script>
 
 <script type="text/html" data-help-name="upload-content">
-    <p>Upload binary or text content to Config Repository</p>
+    <p>Upload binary or text content to a predefined node in Config Repository</p>
     <h3>Details</h3>
-        <p>
-          Select the type of content to download from the dropdown,
-          the content type can also be overridden by <b>msg.contentType</b> set to
-          "binary" or "text".
-        </p>
-        <p>
-          NodeId is the node to upload content to.
-          This field can also be overridden my <b>msg.nodeId</b>.
-        </p>
-        <p>
-          The actual content can be overwritten by <b>msg.data</b>
-        </p>
+    <b>Allowed input</b>
+    <ul>
+      <li><code>msg.nodeId</code> The Id of the Node you want to upload to</li>
+      <li><code>msg.data</code> The actual content</li>
+    </ul>
+    <p>
+        Select the type of content to upload from the dropdown. It is a part of the node config, and can not be changed by the msg.
+    </p>
 </script>

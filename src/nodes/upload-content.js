@@ -7,10 +7,7 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
             var data;
-            if(config.contentType == "Binary")
-                data = msg.data || Buffer.from(config.testValue, "utf-8");
-            else
-                data = msg.data || config.testValue;
+            data = msg.data
             const nodeId = msg.nodeId || config.nodeId;
 
             var chunks = [

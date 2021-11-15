@@ -131,27 +131,38 @@
   <p>Creates a root node/folder, a store or a revision in Config Repository</p>
   <h3>Details</h3>
   <p>
-    Defining and maintaining a folder structure is important to keep
-    track of your Stores and ultimately your Revisions (the content
-    itself). We call our "folders" "nodes", like in a graph. Use the
-    "Node"-nodes to work with the folders dynamically.
+    <b>Allowed input</b>
+    <ul>
+      <li><code>msg.parentId</code> The Id of the Parent Node (leave blank if you want to create a Root folder)</li>
+      <li><code>msg.nodeName</code> The name of the Node</li>
+      <li><code>msg.description</code> The description of the Node</li>
+    </ul>
+    In addition you need to specify either a nodeData or a revisionData object:
   </p>
   <p>
-    To create a Root folder/node, leave the parentId field blank.
-    To create a Store or Revision node, the parentId field must be supplied.
-  </p>
-  <p>
-    Fields that can be overridden:
-  <ul>
-    <li>parentId</li>
-    <li>nodeName</li>
-    <li>description</li>
-    <li>nodeType</li>
-    <li>revisionType</li>
-    <li>version</li>
-    <li>modelVersion</li>
-    <li>timestamp</li>
-    <li>backupSetId</li>
-  </ul>
+    <b>About nodeData and revisionData</b>
+    A nodeData object expects a <code>msg.nodeType</code> with an integer from the following list:
+    <ul>
+      <li>undefined (0)</li>
+      <li>folder (1)</li>
+      <li>namespaceNodesetStore (2)</li>
+      <li>hiveConfigurationStore (3)</li>
+      <li>variableMappingsStore (5)</li>
+    </ul>
+    A revisionData object:
+    <ul>
+      <li><code>msg.revisionType</code> with an integer from the following list:
+        <ul>
+          <li>undefined (0)</li>
+          <li>namespaceNodesetStore (1)</li>
+          <li>hiveConfigurationStore (2)</li>
+          <li>variableMappingsStore (4)</li>
+        </ul>
+      </li>
+      <li><code>msg.version</code> Version of revision</li>
+      <li><code>msg.modelVersion</code> ModelVersion, applicable for Namespace Nodeset</li>
+      <li><code>msg.publicationDate</code> Namespace Nodeset PublicationDate</li>
+      <li><code>msg.storeId</code> Id of the Store this Revision belongs to</li>
+    </ul>
   </p>
 </script>

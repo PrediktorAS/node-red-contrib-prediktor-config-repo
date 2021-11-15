@@ -39,18 +39,47 @@
 </script>
 
 <script type="text/html" data-help-name="get">
-  <p>Get information on a node/folder in Config Repository</p>
+  <p>Get information on a Node in the Config Repository structure</p>
   <h3>Details</h3>
   <p>
-    Defining and maintaining a folder structure is important to keep
-    track of your Stores and ultimately your Revisions (the content
-    itself). We call our "folders" "nodes", like in a graph. Use the
-    "Node"-nodes to work with the folders dynamically.
-  </p>
-  <p>
-    The Id field can be used to get a node by Id.
-    If the parameter "nodeId" is set in the msg input object,
-    this will override any value set in the configuration window
-    of this node.
-  </p>
+    <b>Allowed input</b>
+    <ul>
+      <li><code>msg.Id</code> The Id of the Node you are requesting information on</li>
+    </ul>
+
+    <b>Returns details on a node</b>
+      <ul>
+        <li><code>parentId</code> The Id of the Parent Node</li>
+        <li><code>id</code> The Id of the Node</li>
+        <li><code>name</code> The name of the Node</li>
+        <li><code>description</code> The description of the Node</li>
+        <li><code>date</code> The date the Node was created</li>
+        <li><code>result</code> The results of the request operation</li>
+        <li>Either: <code>nodeData</code> or <code>revisionData</code> will be returned, dependent of the nature of the node</li>
+      </ul>
+      <p>About nodeData and revisionData</p>
+      A nodeData object returns <code>type</code> with a string from the following list:
+      <ul>
+        <li>undefined (0)</li>
+        <li>folder (1)</li>
+        <li>namespaceNodesetStore (2)</li>
+        <li>hiveConfigurationStore (3)</li>
+        <li>variableMappingsStore (5)</li>
+      </ul>
+      A revisionData object contains:
+      <ul>
+        <li><code>type</code>
+          <ul>
+            <li>undefined (0)</li>
+            <li>namespaceNodesetStore (1)</li>
+            <li>hiveConfigurationStore (2)</li>
+            <li>variableMappingsStore (4)</li>
+          </ul>
+        </li>
+        <li><code>version</code> Version of revision</li>
+        <li><code>modelVersion</code> ModelVersion, applicable for Namespace Nodeset</li>
+        <li><code>publicationDate</code> Namespace Nodeset PublicationDate</li>
+        <li><code>storeId</code> Id of the Store this Revision belongs to</li>
+      </ul>
+    </p>
 </script>

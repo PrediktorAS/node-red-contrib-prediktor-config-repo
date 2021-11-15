@@ -43,10 +43,12 @@
   <p>Get all children for a node</p>
   <h3>Details</h3>
   <p>
-    Folders will return its children, either of kind Folder or Store.
-    Stores will return its revisions.
-  </p>
-  <p>
-    <code>msg.parentId</code> is an allowed input and will be sent as part of the request. You can also leave it blank for the root node.
+    <b>Allowed input</b>
+    <ul>
+      <li><code>msg.parentId</code> The Id of the Parent Node you are requesting the children of</li>
+    </ul>
+
+    <b>Returns an array with details for the children nodes</b>
+    Please see the "get" node for more info on the return of each object within the array
   </p>
 </script>
