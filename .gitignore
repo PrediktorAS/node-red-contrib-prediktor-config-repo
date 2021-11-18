@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+/.vs/slnx.sqlite
+/.vs/node-red-contrib-prediktor-config-repo/v16/TestStore/0
+/.vs

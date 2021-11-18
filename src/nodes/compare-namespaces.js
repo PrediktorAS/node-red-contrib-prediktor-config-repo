@@ -11,8 +11,8 @@ module.exports = function(RED) {
 
     node.on('input', function(msg) {
       let namespaceCompareRequest = {
-        baseRevisionId: msg.baseRevisionId || node.baseRevisionId,
-        compareRevisionId: msg.compareRevisionId || node.compareRevisionId,
+        baseRevisionId: { id: msg.baseRevisionId || node.baseRevisionId },
+        compareRevisionId: { id: msg.compareRevisionId || node.compareRevisionId },
         nodeType: msg.nodeType || node.nodeType,
         excludeValueSourceAttributes: msg.excludeValueSourceAttributes || node.excludeValueSourceAttributes
       };
