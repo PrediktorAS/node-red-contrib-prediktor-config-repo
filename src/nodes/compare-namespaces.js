@@ -6,14 +6,14 @@ module.exports = function(RED) {
     this.server = RED.nodes.getNode(config.server);
     this.baseRevisionId = config.baseRevisionId;
     this.compareRevisionId = config.compareRevisionId;
-    this.nodeType = config.nodeType;
+    this.revisionType = config.revisionType;
     this.excludeValueSourceAttributes = config.excludeValueSourceAttributes;
 
     node.on('input', function(msg) {
       let namespaceCompareRequest = {
         baseRevisionId: { id: msg.baseRevisionId || node.baseRevisionId },
         compareRevisionId: { id: msg.compareRevisionId || node.compareRevisionId },
-        nodeType: msg.nodeType || node.nodeType,
+        revisionType: parseInt(msg.revisionType || node.revisionType),
         excludeValueSourceAttributes: msg.excludeValueSourceAttributes || node.excludeValueSourceAttributes
       };
 
@@ -22,11 +22,35 @@ module.exports = function(RED) {
 
       var chunks = [];
       var call = client.compareNamespaces(namespaceCompareRequest);
+
       call.on('data', function(chunk) {
         chunks.push(chunk);
       });
       call.on('end', function() {
-        msg.payload = chunks;
+
+        let success = false;
+        let error = '';
+        let errorDetails = '';
+        for(var i = 0; i < chunks.length; i++) {
+
+          if(chunks[i]?.success !== undefined) {
+            success = chunks[i].success;
+          }
+          if(chunks[i]?.error !== undefined) {
+            error = chunks[i].error;
+          }
+          if(chunks[i]?.errordetails !== undefined) {
+            errorDetails = chunks[i].errordetails;
+          }
+        }
+
+        if(success) {
+          msg.payload = chunks;
+        }
+        else {
+          msg.payload = null;
+          msg.error = error + errorDetails;
+        }
         node.send(msg);
       });
       call.on('error', function(error) {
