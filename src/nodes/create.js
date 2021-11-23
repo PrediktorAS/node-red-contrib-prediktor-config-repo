@@ -49,8 +49,16 @@ module.exports = function(RED) {
       const client = utils.getClient(url);
 
       client.createNode(nodeRequest, function(err, data) {
-        msg.payload = data;
-        msg.error = err;
+        
+        msg.payload = data?.nodeId?.id;
+
+        if(err == null && !data?.result?.success) {
+            msg.error = data.result?.error;
+        }
+        else {
+            msg.error = err;
+        }
+        
         node.send(msg);
       });
     });

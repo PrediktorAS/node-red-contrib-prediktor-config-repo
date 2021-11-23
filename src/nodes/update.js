@@ -6,7 +6,6 @@ module.exports = function(RED) {
     this.server = RED.nodes.getNode(config.server);
 
     node.on('input', function(msg) {
-        const parentId = msg.parentId || config.parentId;
         const nodeId = msg.nodeId || config.nodeId;
         const nodeName = msg.nodeName || config.nodeName;
         const description = msg.description || config.description;
@@ -21,7 +20,7 @@ module.exports = function(RED) {
 
         let nodeRequest = {
           parentId: {
-            id: parentId
+            id: ''
           },
           id: {
             id: nodeId
@@ -49,9 +48,16 @@ module.exports = function(RED) {
         const url = node.server.host + ":" + node.server.port;
         const client = utils.getClient(url);
 
-        client.createNode(nodeRequest, function(err, data) {
+        client.updateNode(nodeRequest, function(err, data) {
           msg.payload = data;
-          msg.error = err;
+
+          if(err == null && !data?.success) {
+            msg.error = data.error;
+          }
+          else {
+              msg.error = err;
+          }
+
           node.send(msg);
         });
     });

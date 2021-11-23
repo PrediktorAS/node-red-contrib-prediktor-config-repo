@@ -30,9 +30,16 @@ module.exports = function(RED) {
             const client = utils.getClient(url);
 
             function runUploadChunk(callback){
-                var call = client[method](function(error, status) {
-                    msg.payload = status;
-                    msg.error = error;
+                var call = client[method](function(err, data) {
+                    msg.payload = data;
+
+                    if(err == null && !data?.success) {
+                        msg.error = data.error;
+                    }
+                    else {
+                        msg.error = err;
+                    }
+    
                     node.send(msg);
                 });
 

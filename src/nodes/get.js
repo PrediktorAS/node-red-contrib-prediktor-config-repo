@@ -18,7 +18,14 @@ module.exports = function(RED) {
 
             client.getNode(getNodesRequest, function(err, data){
                 msg.payload = data;
-                msg.error = err;
+
+                if(err == null && !data?.result?.success) {
+                    msg.error = data.result?.error;
+                }
+                else {
+                    msg.error = err;
+                }
+
                 node.send(msg);
             });
         });
