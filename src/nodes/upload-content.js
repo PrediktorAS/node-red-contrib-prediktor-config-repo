@@ -18,7 +18,8 @@ module.exports = function(RED) {
             const data_len = data.length;
             var i = 0;
             while(i < data_len){
-                chunk = data.slice(i, i += data_len)
+                let toIndex = Math.min(data_len - i, chunk_size);
+                let chunk = data.slice(i, i += toIndex)
                 if(config.contentType == "Binary")
                     chunks.push({ binaryChunk: { bytes: chunk } });
                 else
