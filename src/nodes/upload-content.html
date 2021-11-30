@@ -6,7 +6,8 @@
             name: {value: ""},
             server: {value: "", type: "prediktor-config-repository"},
             nodeId: {value: ""},
-            contentType: {value: "binary"}
+            fileName: {value: ""},
+            contentType: {value: "Text"}
         },
         inputs:1,
         outputs:1,
@@ -23,8 +24,8 @@
         <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-fileName"><i class="fa fa-tag"></i> File name</label>
+        <input type="text" id="node-input-fileName" placeholder="Path and name of file">
     </div>
     <div class="form-row">
         <label for="node-input-nodeId"><i class="fa fa-tag"></i> Node Id</label>
@@ -40,12 +41,12 @@
 </script>
 
 <script type="text/html" data-help-name="upload-content">
-    <p>Upload binary or text content to a predefined node in Config Repository</p>
+    <p>Upload binary or text content to a predefined revision in Config Repository</p>
     <h3>Details</h3>
     <b>Allowed input</b>
     <ul>
-      <li><code>msg.nodeId</code> The Id of the Revision you want to upload to</li>
-      <li><code>msg.data</code> The actual content</li>
+      <li><code>msg.nodeId</code> The Id of the Revision you want to upload to. Will use configured value if not empty</li>
+      <li><code>msg.fileName</code> Path and name of file. Will use configured value if not empty</li>      
     </ul>
     <p>
         Select the type of content to upload from the dropdown. It is a part of the node config, and can not be changed by the msg.

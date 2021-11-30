@@ -1,56 +1,82 @@
+const { loadPackageDefinition } = require('@grpc/grpc-js');
 let utils = require('../utils/grpc');
+let fs = require('fs');
+
 module.exports = function(RED) {
     function uploadContentNode(config) {
         RED.nodes.createNode(this, config);
-        var node = this;
+        const node = this;
         this.server = RED.nodes.getNode(config.server);
 
         node.on('input', function(msg) {
-            var data;
-            data = msg.data
-            const nodeId = msg.nodeId || config.nodeId;
 
-            var chunks = [
-                {  revisionId: { id: nodeId } },
-            ];
+            uploadContent(msg);
+        });
 
-            const chunk_size = 4000000; // 4 MB
-            const data_len = data.length;
-            var i = 0;
-            while(i < data_len){
-                chunk = data.slice(i, i += data_len)
-                if(config.contentType == "Binary")
-                    chunks.push({ binaryChunk: { bytes: chunk } });
-                else
-                    chunks.push({  textChunk: { arr: [chunk] } });
+        function uploadContent(msg) {
+
+            const nodeId = config.nodeId || msg.nodeId;
+            const fileName = config.fileName || msg.fileName;
+
+            if(!nodeId) {
+                msg.error = 'No nodeId specified. Upload content failed';
+                node.send(msg);
+                return;
             }
 
-            const method = (config.contentType == "Binary") ? "uploadBinaryContent" : "uploadTextContent";
+            if(!fileName) {
+                msg.error = 'No fileName specified. Upload content failed';
+                node.send(msg);
+                return;
+            }
+
+            if(!fs.existsSync(fileName)) {
+                msg.error = 'File \'' + fileName + '\' was not found';
+                node.send(msg);
+                return;
+            }
+
+            const method = config.contentType == "Binary" ? "uploadBinaryContent" : "uploadTextContent";
             const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
 
-            function runUploadChunk(callback){
-                var call = client[method](function(err, data) {
+            function runUploadInChunks() {
+                const call = client[method](function(err, data) {
                     msg.payload = data;
 
-                    if(err == null && !data?.success) {
-                        msg.error = data.error;
-                    }
-                    else {
-                        msg.error = err;
-                    }
+                    msg.error = (err == null && !data?.success) ? data.error : err;
     
                     node.send(msg);
                 });
 
-                for(const chunk of chunks){
-                    call.write(chunk);
+                let revChunk = {  revisionId: { id: nodeId } };
+                call.write(revChunk);
+
+                async function streamFile() {
+
+                    const chunk_size = 4000000; // 4 MB
+
+                    let contentType = config.contentType == "Binary" ? null : "utf8";
+
+                    const stream = fs.createReadStream(fileName, 
+                        {highWaterMark: chunk_size, encoding: contentType});
+
+                    for await (const data of stream) {
+                        
+                        let chunk = config.contentType == "Binary" ? {  binaryChunk: { bytes: data } } : {  textChunk: { arr: [data] } };
+
+                        call.write(chunk);
+                    }
+
+                    call.end();
                 }
-                call.end();
+
+                streamFile();
             }
 
-            runUploadChunk();
-        });
+            runUploadInChunks();
+        }
     }
+
     RED.nodes.registerType("upload-content", uploadContentNode);
 }
