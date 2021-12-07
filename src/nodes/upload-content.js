@@ -1,6 +1,7 @@
 const { loadPackageDefinition } = require('@grpc/grpc-js');
 let utils = require('../utils/grpc');
 let fs = require('fs');
+const readline = require('readline');
 
 module.exports = function(RED) {
     function uploadContentNode(config) {
@@ -52,18 +53,18 @@ module.exports = function(RED) {
                 let revChunk = {  revisionId: { id: nodeId } };
                 call.write(revChunk);
 
-                async function streamFile() {
+                const chunk_size = 4000000; // 4 MB
 
-                    const chunk_size = 4000000; // 4 MB
+                async function streamBinaryFile() {
 
-                    let contentType = config.contentType == "Binary" ? null : "utf8";
+                    let contentType = null;
 
                     const stream = fs.createReadStream(fileName, 
                         {highWaterMark: chunk_size, encoding: contentType});
 
                     for await (const data of stream) {
                         
-                        let chunk = config.contentType == "Binary" ? {  binaryChunk: { bytes: data } } : {  textChunk: { arr: [data] } };
+                        let chunk = {  binaryChunk: { bytes: data } };
 
                         call.write(chunk);
                     }
@@ -71,7 +72,56 @@ module.exports = function(RED) {
                     call.end();
                 }
 
-                streamFile();
+                function streamTextFile() {
+
+                    let contentType = "utf8";
+
+                    const readInterface = readline.createInterface({
+                        input: fs.createReadStream(fileName, {encoding: contentType}),
+                        console: false
+                    });
+
+                    let chunks = [];
+                    let lineCounter = 0;
+                    let numBytes = 0;
+                    let counter = 0;
+                    readInterface.on('line', function(line) {
+
+
+                        chunks[lineCounter++] = line;
+
+                        numBytes += line.length;
+
+                        if(numBytes >= chunk_size) {
+
+                            //console.log("Sending chunks " + counter++);
+
+                            let chunk = {  textChunk: { arr: chunks } };
+                            call.write(chunk);
+                            chunks = [];
+                            lineCounter = 0;
+                            numBytes = 0;
+                        }
+
+                    });
+
+                    readInterface.on('close', function(){
+                        if(lineCounter > 0) {
+                            //console.log("Sending last chunks " + counter++);
+                            let chunk = {  textChunk: { arr: chunks } };
+                            call.write(chunk);
+                        }
+    
+                        //console.log("End Stream " + lineCounter);
+                        call.end();
+                    });
+
+                }
+
+                if(config.contentType == "Binary")
+                    streamBinaryFile();
+                else 
+                    streamTextFile();
             }
 
             runUploadInChunks();
