@@ -41,6 +41,12 @@ message StringResult {
 	Result result = 2;
 }
 
+// Message for a string result
+message StringArrayResult {
+	StringArray value = 1;
+	Result result = 2;
+}
+
 message BrowseFilter {
 	string value = 1;
 }
