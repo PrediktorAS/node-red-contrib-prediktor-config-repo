@@ -37,9 +37,6 @@
       timestamp: {
         value: 0,
         validate: RED.validators.number()
-      },
-      backupSetId: {
-        value: ""
       }
     },
     inputs: 1,
@@ -93,11 +90,10 @@
   <div class="form-row row-nodetype">
     <label for="node-input-nodeType"><i class="fa fa-tag"></i> NodeType</label>
     <select id="node-input-nodeType" placeholder="NodeType">
-      <option value="1">Node</option>
+      <option value="1">Folder</option>
       <option value="2">Namespace Nodeset</option>
       <option value="3">Hive Configuration</option>
-      <option value="4">Namespace Database</option>
-      <option value="5">variableMappings</option>
+      <option value="5">Variable Mappings</option>
     </select>
   </div>
   <div class="form-row row-revisiontype">
@@ -105,7 +101,6 @@
     <select id="node-input-revisionType" placeholder="RevisionType">
       <option value="1">Namespace Nodeset Revision</option>
       <option value="2">Hive Configuration Revision</option>
-      <option value="3">NamespaceDatabase Revision</option>
       <option value="4">Variable Mappings Revision</option>
     </select>
   </div>
@@ -120,10 +115,6 @@
   <div class="form-row row-revisiontype">
     <label for="node-input-timestamp"><i class="fa fa-tag"></i> Time Stamp</label>
     <input id="node-input-timestamp" placeholder="Timestamp">
-  </div>
-  <div class="form-row row-revisiontype">
-    <label for="node-input-backupSetId"><i class="fa fa-tag"></i> Backup Set Id</label>
-    <input id="node-input-backupSetId" placeholder="BackupSetId">
   </div>
 </script>
 

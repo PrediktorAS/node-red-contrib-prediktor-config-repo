@@ -119,7 +119,6 @@ message RevisionData {
 	string version = 2;			// Version of revision
 	string modelVersion = 3;	// ModelVersion, applicable for Namespace Nodeset
 	google.protobuf.Timestamp publicationDate = 4; // Namespace Nodeset PublicationDate
-	string storeId = 5;			// Id of the Store this Revision belongs to
 }
 
 //Node types Folders and Stores
@@ -128,7 +127,6 @@ enum NodeTypeEnum {
 	folder = 1;					// Folder
 	namespaceNodesetStore = 2;	// Namespace Nodeset Store
 	hiveConfigurationStore = 3;	// Hive Configuration store
-	namespaceDatabaseStore = 4;	// Namespace database (depricated)
 	variableMappingsStore = 5;	// Variable Mapping Store
 }
 
@@ -137,7 +135,6 @@ enum RevisionTypeEnum {
 	undefinedRevision = 0;
 	namespaceNodesetRevision = 1;	// Namespace Nodeset
 	hiveConfigurationRevision = 2;	// Hive Configuration
-	namespaceDatabaseRevision = 3;	// Namespace database (depricated)
 	variableMappingsRevision = 4;	// Variable Mapping
 }
 
