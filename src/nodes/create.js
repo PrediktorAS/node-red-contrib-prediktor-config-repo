@@ -51,15 +51,20 @@ module.exports = function(RED) {
       client.createNode(nodeRequest, function(err, data) {
         
         msg.payload = data?.nodeId?.id;
+        msg.success = true;
+        msg.error = '';
 
-        if(err == null && !data?.result?.success) {
-            msg.error = data.result?.error;
+        if(err) {
+          msg.error = err;
+          msg.success = false;
         }
-        else {
-            msg.error = err;
+        else if(!data?.result?.success) {
+          msg.error = data.result?.error;
+          msg.success = false;
         }
         
         node.send(msg);
+
       });
     });
   }

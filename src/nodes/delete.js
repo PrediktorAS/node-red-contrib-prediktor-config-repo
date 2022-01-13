@@ -12,12 +12,16 @@ module.exports = function(RED) {
 
             client.deleteNode({id: nodeId}, function(err, data){
                 msg.payload = data;
-
-                if(err == null && !data?.success) {
-                    msg.error = data.error;
-                }
-                else {
+                msg.success = true;
+                msg.error = '';
+        
+                if(err) {
                     msg.error = err;
+                    msg.success = false;
+                }
+                else if(!data?.success) {
+                    msg.error = data.error;
+                    msg.success = false;
                 }
 
                 node.send(msg);

@@ -12,6 +12,11 @@ module.exports = function(RED) {
             client.ping({}, function(err, data){
                 msg.payload = data;
                 msg.error = err;
+                if(err)
+                    msg.success = false;
+                else
+                    msg.success = true;
+
                 node.send(msg);
             });
         });
