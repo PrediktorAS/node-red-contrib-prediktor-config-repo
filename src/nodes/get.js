@@ -18,12 +18,16 @@ module.exports = function(RED) {
 
             client.getNode(getNodesRequest, function(err, data){
                 msg.payload = data;
+                msg.success = true;
+                msg.error = '';
 
-                if(err == null && !data?.result?.success) {
-                    msg.error = data.result?.error;
-                }
-                else {
+                if(err) {
                     msg.error = err;
+                    msg.success = false;
+                }
+                else if(!data?.result?.success) {
+                    msg.error = data.result?.error;
+                    msg.success = false;
                 }
 
                 node.send(msg);

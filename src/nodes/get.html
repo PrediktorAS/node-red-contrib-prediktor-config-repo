@@ -47,17 +47,26 @@
       <li><code>msg.nodeId</code> The Id of the Node you are requesting information on</li>
     </ul>
 
-    <b>Returns details on a node</b>
-      <ul>
-        <li><code>parentId</code> The Id of the Parent Node</li>
-        <li><code>id</code> The Id of the Node</li>
-        <li><code>name</code> The name of the Node</li>
-        <li><code>description</code> The description of the Node</li>
-        <li><code>date</code> The date the Node was created</li>
-        <li><code>result</code> The results of the request operation</li>
-        <li>Either: <code>nodeData</code> or <code>revisionData</code> will be returned, dependent of the nature of the node</li>
-      </ul>
-      <p>About nodeData and revisionData</p>
+    <b>Returns</b>
+    <ul>
+      <li><code>msg.payload</code> 
+        <b>Returns details on a node</b>
+        <ul>
+          <li><code>parentId</code> The Id of the Parent Node</li>
+          <li><code>id</code> The Id of the Node</li>
+          <li><code>name</code> The name of the Node</li>
+          <li><code>description</code> The description of the Node</li>
+          <li><code>date</code> The date the Node was created</li>
+          <li><code>result</code> The results of the request operation</li>
+          <li>Either: <code>nodeData</code> or <code>revisionData</code> will be returned, dependent of the nature of the node</li>
+        </ul>
+      </li>
+      <li><code>msg.success</code> true if operation succeeded</li>
+      <li><code>msg.error</code> Error message if operation failed</li>
+    </ul>
+
+      <b>About nodeData and revisionData</b>
+      <br>
       A nodeData object returns <code>type</code> with a string from the following list:
       <ul>
         <li>undefined (0)</li>

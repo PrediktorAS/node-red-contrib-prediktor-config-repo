@@ -48,7 +48,13 @@
       <li><code>msg.parentId</code> The Id of the Parent Node you are requesting the children of</li>
     </ul>
 
-    <b>Returns an array with details for the children nodes</b>
-    Please see the "get" node for more info on the return of each object within the array
+    <b>Returns</b>
+    <ul>
+      <li><code>msg.payload</code> An array with details for the children nodes.</li>
+      Please see the "get" node for more info on the return of each object within the array
+      <li><code>msg.success</code> true if operation succeeded</li>
+      <li><code>msg.error</code> Error message if operation failed</li>
+    </ul>
+
   </p>
 </script>

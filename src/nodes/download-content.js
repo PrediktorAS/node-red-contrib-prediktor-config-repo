@@ -10,29 +10,42 @@ module.exports = function(RED) {
       const method = (config.contentType == "Binary") ? "downloadBinaryContent" : "downloadTextContent";
       const url = node.server.host + ":" + node.server.port;
       const client = utils.getClient(url);
+      msg.success = true;
 
       var chunks = [];
       var call = client[method]({
         id: nodeId
       });
       call.on('data', function(chunk) {
+
         if (config.contentType == "Binary") {
           chunks.push(chunk.bytes);
         }
         else{
           chunks.push(chunk.arr);
         }
+
       });
       call.on('end', function() {
+
+        console.log("end called ");
+
         if (config.contentType == "Binary")
           msg.payload = Buffer.concat(chunks);
         else
           msg.payload = chunks.join();
+
         node.send(msg);
+
       });
       call.on('error', function(error) {
+
+        console.log("error called");
+
         msg.error = error;
-        node.send(msg);
+        msg.success = false;
+
+        //node.send(msg);
       });
     });
   }

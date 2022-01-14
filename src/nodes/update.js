@@ -50,12 +50,16 @@ module.exports = function(RED) {
 
         client.updateNode(nodeRequest, function(err, data) {
           msg.payload = data;
+          msg.success = true;
+          msg.error = '';
 
-          if(err == null && !data?.success) {
-            msg.error = data.error;
-          }
-          else {
+          if(err) {
               msg.error = err;
+              msg.success = false;
+          }
+          else if(!data?.success) {
+              msg.error = data.error;
+              msg.success = false;
           }
 
           node.send(msg);

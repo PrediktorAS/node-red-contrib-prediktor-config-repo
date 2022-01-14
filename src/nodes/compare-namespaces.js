@@ -28,6 +28,7 @@ module.exports = function(RED) {
       });
       call.on('end', function() {
 
+        msg.error = '';
         let success = false;
         let error = '';
         let errorDetails = '';
@@ -44,14 +45,15 @@ module.exports = function(RED) {
           }
         }
 
-        if(success) {
-          msg.payload = chunks;
-        }
-        else {
-          msg.payload = null;
+        msg.success = success;
+        msg.payload = chunks;
+
+        if(!success) {
           msg.error = error + errorDetails;
         }
+
         node.send(msg);
+        
       });
       call.on('error', function(error) {
         msg.error = error;
