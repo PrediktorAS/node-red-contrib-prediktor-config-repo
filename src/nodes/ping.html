@@ -29,8 +29,14 @@
 <script type="text/html" data-help-name="ping">
     <p>Ping your Config Repository to check for a valid response</p>
     <h3>Details</h3>
-        <p>
-            This is an easy way for you to test if your Config Repository
-            is active and if you can reach it.
-        </p>
+    <p>
+        This is an easy way for you to test if your Config Repository
+        is active and if you can reach it.
+    </p>
+    <b>Returns</b>
+    <ul>
+        <li><code>msg.payload</code> A message from the server</li>
+        <li><code>msg.success</code> true if operation succeeded</li>
+        <li><code>msg.error</code> Error message if operation failed</li>
+    </ul>
 </script>
