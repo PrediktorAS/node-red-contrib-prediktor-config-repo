@@ -10,6 +10,7 @@ update = require("nodes/update");
 del = require("nodes/delete");
 compare = require("nodes/compare-namespaces");
 prediktorConfigRepository = require("nodes/prediktor-config-repository");
+unzip = require("nodes/unzip-large-folder");
 
 module.exports = function(RED){
     RED.nodes.registerType('ping', ping.PingNode);
@@ -22,4 +23,5 @@ module.exports = function(RED){
     RED.nodes.registerType('delete', del.DeleteNode);
     RED.nodes.registerType('compare-namespaces', compare.CompareNamespacesNode);
     RED.nodes.registerType('prediktor-config-repository', prediktorconfigrepository.PrediktorConfigRepositoryNode);
+    RED.nodes.registerType('unzip-large-folder', unzip.UnzipLargeFolderNode);
 }
