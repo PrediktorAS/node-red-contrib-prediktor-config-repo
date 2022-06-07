@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    RED.nodes.registerType('unzip-large-folder', {
+        category: 'Prediktor Config Repo',
+        color: '#E8E6E2',
+        defaults: {
+            name: {
+                value: ""
+            },
+            zipFilepath: {
+                value: ""
+            },
+            outputPath: {
+                value: ""
+            },
+            clearFolder: {
+                value: false
+            }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "prediktor.png",
+        label: function() {
+            return this.name||"unzip-large-folder";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="unzip-large-folder">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-zipFilepath"><i class="fa fa-tag"></i> Zip-file filepath</label>
+        <input type="text" id="node-input-zipFilepath" placeholder="Zip-file filepath">
+    </div>
+    <div class="form-row">
+        <label for="node-input-outputPath"><i class="fa fa-tag"></i> Output path</label>
+        <input type="text" id="node-input-outputPath" placeholder="Output path">
+    </div>
+    <div class="form-row row-unzip-large-folder">
+        <label for="node-input-clearFolder"><i class="fa fa-tag"></i> Clear output path folder</label>
+        <input type="checkbox" id="node-input-clearFolder" placeholder="False">
+      </div>
+</script>
+
+<script type="text/html" data-help-name="unzip-large-folder">
+    <p>Unzips folder and places files in given path</p>
+    <details open>
+        <b>Allowed input</b>
+        <ul>
+            <li>
+                <code>msg.zipFilepath</code>
+                The path and name of the zip-file. The path should be absolute. If the path is relative, it will be relative to the directory running node-RED.
+                <br/>
+                An example of a valid filename: 
+                <code>
+                    C:/temp/out.zip
+                </code>
+            </li>
+            <li>
+                <code>msg.outputPath</code>
+                The path where the unzipped files are going to be placed. The path should be absolute. If the path is relative, it will be relative to the directory running node-RED.
+                <br/>
+                An example of a valid path: 
+                <code>
+                    C:/temp/result
+                </code>
+            </li>
+            <li>
+                <code>msg.clearFolder</code>
+                 If checked, the output path will be cleared before adding the unzipped items.
+            </li>
+        </ul>
+        <b>Returns</b>
+        <ul>
+            <li>
+                <code>msg.path</code>
+                The path to the content of the unzipped folder. The path has the same format as 
+                <code>msg.outputPath</code> (relative or absolute).
+            </li>
+            <li>
+                <code>msg.filenames</code>
+                An array containing the names of the files in the unzipped folder.
+            </li>
+        </ul>
+    </details>
+</script>
