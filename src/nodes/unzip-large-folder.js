@@ -26,62 +26,66 @@ module.exports = function (RED) {
 
             try {
                 if (fs.existsSync(zipFilepath)) {
-                    let emptiedFolder = !clearFolder;
-                    let startedUnzipping = false;
-                    let finishedUnzipping = false;
-                    let counter = 0;
+                    if(path.extname(zipFilepath) === '.zip') {
+                        let emptiedFolder = !clearFolder;
+                        let startedUnzipping = false;
+                        let finishedUnzipping = false;
+                        let counter = 0;
 
-                    let timer = setInterval(function() {
-                        if (!emptiedFolder) {
-                            if (fs.existsSync(outputPath)) {
-                                fsExtra.emptyDirSync(outputPath);
+                        let timer = setInterval(function() {
+                            if (!emptiedFolder) {
+                                if (fs.existsSync(outputPath)) {
+                                    fsExtra.emptyDirSync(outputPath);
+                                }
+                                emptiedFolder = true;
                             }
-                            emptiedFolder = true;
-                        }
-                        else if (emptiedFolder && !startedUnzipping) {
-                            startedUnzipping = true;
+                            else if (emptiedFolder && !startedUnzipping) {
+                                startedUnzipping = true;
 
-                            const stream = fs.createReadStream(zipFilepath).pipe(unzipper.Extract({ path: outputPath }));
+                                const stream = fs.createReadStream(zipFilepath).pipe(unzipper.Extract({ path: outputPath }));
 
-                            stream.on('close', function() {
-                                finishedUnzipping = true;
-                            })
-                        }
-                        else if (finishedUnzipping) {
-                            readFolder(outputPath, msg, send);
-                            clearInterval(timer);
-                        } else if (counter >= 360) {
-                            clearInterval(timer);
-                        }
-                        counter ++;
-                    }, 500);
+                                stream.on('close', function() {
+                                    finishedUnzipping = true;
+                                })
+                            }
+                            else if (finishedUnzipping) {
+                                readFolder(outputPath, msg, send);
+                                clearInterval(timer);
+                            } else if (counter >= 360) {
+                                clearInterval(timer);
+                            }
+                            counter ++;
+                        }, 500);
 
-                    if (counter >= 360) {
-                        done("Error: unzipping timed out");
-                        return;
-                    }
-
-                    function readFolder (outputPath, msg, send) {
-                        function getDirectory (path) {
-                            return fs.readdirSync(path).filter(function (file) {
-                                return fs.statSync(path + '/' + file).isDirectory();
-                            })
-                        }
-    
-                        let folderName = getDirectory(outputPath);
-
-                        if(!folderName[0]) {
-                            done("The name of the unzipped folder is undefined");
+                        if (counter >= 360) {
+                            done("Error: unzipping timed out");
                             return;
                         }
 
-                        let newOutputPath = path.join(outputPath, folderName[0]);
-                        let filenames = fs.readdirSync(newOutputPath);
-    
-                        msg.path = newOutputPath;
-                        msg.filenames = filenames;
-                        send(msg);
-                    }                  
+                        function readFolder (outputPath, msg, send) {
+                            function getDirectory (path) {
+                                return fs.readdirSync(path).filter(function (file) {
+                                    return fs.statSync(path + '/' + file).isDirectory();
+                                })
+                            }
+        
+                            let folderName = getDirectory(outputPath);
+
+                            if(!folderName[0]) {
+                                done("The name of the unzipped folder is undefined");
+                                return;
+                            }
+
+                            let newOutputPath = path.join(outputPath, folderName[0]);
+                            let filenames = fs.readdirSync(newOutputPath);
+        
+                            msg.path = newOutputPath;
+                            msg.filenames = filenames;
+                            send(msg);
+                        }            
+                    } else {
+                        throw new Error('The zipFilepath is not a zip-file');
+                    }
                 } else {
                     throw new Error('The zipFilepath does not exist');
                 }
