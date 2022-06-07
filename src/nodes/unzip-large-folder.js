@@ -63,23 +63,9 @@ module.exports = function (RED) {
                         }
 
                         function readFolder (outputPath, msg, send) {
-                            function getDirectory (path) {
-                                return fs.readdirSync(path).filter(function (file) {
-                                    return fs.statSync(path + '/' + file).isDirectory();
-                                })
-                            }
+                            let filenames = fs.readdirSync(outputPath);
         
-                            let folderName = getDirectory(outputPath);
-
-                            if(!folderName[0]) {
-                                done("The name of the unzipped folder is undefined");
-                                return;
-                            }
-
-                            let newOutputPath = path.join(outputPath, folderName[0]);
-                            let filenames = fs.readdirSync(newOutputPath);
-        
-                            msg.path = newOutputPath;
+                            msg.path = outputPath;
                             msg.filenames = filenames;
                             send(msg);
                         }            
