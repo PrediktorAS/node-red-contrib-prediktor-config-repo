@@ -1,3 +1,5 @@
+const compareHiveConfig = require("./nodes/compare-hive-config");
+const compareVariableMappings = require("./nodes/compare-variable-mappings");
 const prediktorConfigRepository = require("./nodes/prediktor-config-repository");
 
 ping = require("nodes/ping");
@@ -11,6 +13,8 @@ del = require("nodes/delete");
 compare = require("nodes/compare-namespaces");
 prediktorConfigRepository = require("nodes/prediktor-config-repository");
 unzip = require("nodes/unzip-large-folder");
+compareVariableMappings = require("nodes/compare-variable-mappings");
+compareHiveConfig = requiure("nodes/compare-hive-config")
 
 module.exports = function(RED){
     RED.nodes.registerType('ping', ping.PingNode);
@@ -24,4 +28,6 @@ module.exports = function(RED){
     RED.nodes.registerType('compare-namespaces', compare.CompareNamespacesNode);
     RED.nodes.registerType('prediktor-config-repository', prediktorconfigrepository.PrediktorConfigRepositoryNode);
     RED.nodes.registerType('unzip-large-folder', unzip.UnzipLargeFolderNode);
+    RED.nodes.registerType('compare-variable-mappings', compareVariableMappings.CompareVariableMappingsNode);
+    RED.nodes.registerType('compare-hive-config', compareHiveConfig.CompareConfigNode);
 }
