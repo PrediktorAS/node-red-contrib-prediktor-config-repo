@@ -29,17 +29,16 @@ module.exports = function(RED) {
         msg.error = '';
         let success = false;
         let error = '';
-        let errorDetails = '';
+        console.log(chunks);
         for(var i = 0; i < chunks.length; i++) {
 
-          if(chunks[i]?.success !== undefined) {
+         /* if(chunks[i]?.success !== undefined) {
             success = chunks[i].success;
-          }
-          if(chunks[i]?.error !== undefined) {
-            error = chunks[i].error;
-          }
-          if(chunks[i]?.errordetails !== undefined) {
-            errorDetails = chunks[i].errordetails;
+          }*/
+          if(chunks[i]?.errorInfo !== undefined) {
+            error = chunks[i].errorInfo.error + ". " + chunks[i].errorInfo.errorDetails;
+          } else{
+            success = true;
           }
         }
 
@@ -47,7 +46,7 @@ module.exports = function(RED) {
         msg.payload = chunks;
 
         if(!success) {
-          msg.error = error + errorDetails;
+          msg.error = error;
         }
 
         node.send(msg);
