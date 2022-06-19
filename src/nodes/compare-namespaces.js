@@ -25,14 +25,14 @@ module.exports = function(RED) {
       call.on('data', function(chunk) {
         chunks.push(chunk);
       });
-      call.on('end', function() {
 
+      call.on('end', function() {
         msg.error = '';
         let success = false;
         let error = '';
         let errorDetails = '';
-        for(var i = 0; i < chunks.length; i++) {
 
+        for(var i = 0; i < chunks.length; i++) {
           if(chunks[i]?.success !== undefined) {
             success = chunks[i].success;
           }
@@ -52,8 +52,8 @@ module.exports = function(RED) {
         }
 
         node.send(msg);
-        
       });
+
       call.on('error', function(error) {
         msg.error = error;
       });
