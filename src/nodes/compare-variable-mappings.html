@@ -1,0 +1,65 @@
+<script type="text/javascript">
+    RED.nodes.registerType('compare-variable-mappings', {
+      category: 'Prediktor Config Repo',
+      color: '#E8E6E2',
+      defaults: {
+        name: {
+          value: ""
+        },
+        server: {
+          value: "",
+          type: "prediktor-config-repository"
+        },
+        baseRevisionId: {
+          value: ""
+        },
+        compareRevisionId: {
+          value: ""
+        }
+      },
+      inputs: 1,
+      outputs: 1,
+      icon: "prediktor.png",
+      label: function() {
+        return this.name || "Compare Variable Mappings";
+      }
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="compare-variable-mappings">
+    <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+      <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+      <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+    </div>
+    <div class="form-row">
+      <label for="node-input-baseRevisionId"><i class="fa fa-link"></i> Base Revision Id</label>
+      <input type="text" id="node-input-baseRevisionId" placeholder="baseRevisionId">
+    </div>
+    <div class="form-row">
+      <label for="node-input-compareRevisionId"><i class="fa fa-archive"></i> Compare Revision Id</label>
+      <input type="text" id="node-input-compareRevisionId" placeholder="compareRevisionId">
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="compare-namespaces">
+    <p>Compare the content of two mapping nodes on a Config Repository Server</p>
+    <h3>Details</h3>
+    <b>Allowed input</b>
+    <ul>
+      <li><code>msg.baseRevisionId</code> The Id (string) of the base revision</li>
+      <li><code>msg.compareRevisionId</code> The Id (string) of the revision to compare the base with</li>
+    </ul>
+  
+    <b>Returns</b>
+    <ul>
+      <li><code>msg.payload</code> An array with multiple results</li>
+      <li><code>msg.success</code> true if operation succeeded</li>
+      <li><code>msg.error</code> Error message if operation failed</li>
+    </ul>
+      
+  </script>
+  

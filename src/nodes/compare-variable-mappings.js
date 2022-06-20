@@ -1,26 +1,23 @@
 let utils = require('../utils/grpc');
 module.exports = function(RED) {
-  function CompareNamespacesNode(config) {
+  function CompareVariableMappingsNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
     this.server = RED.nodes.getNode(config.server);
     this.baseRevisionId = config.baseRevisionId;
     this.compareRevisionId = config.compareRevisionId;
-    this.excludeValueSourceAttributes = config.excludeValueSourceAttributes;
 
     node.on('input', function(msg) {
-      let namespaceCompareRequest = {
+      let revisionCompareRequest = {
         baseRevisionId: { id: msg.baseRevisionId || node.baseRevisionId },
-        compareRevisionId: { id: msg.compareRevisionId || node.compareRevisionId },
-        revisionType: 1,
-        excludeValueSourceAttributes: msg.excludeValueSourceAttributes || node.excludeValueSourceAttributes
+        compareRevisionId: { id: msg.compareRevisionId || node.compareRevisionId }
       };
 
       const url = node.server.host + ":" + node.server.port;
       const client = utils.getClient(url);
 
       var chunks = [];
-      var call = client.compareNamespaces(namespaceCompareRequest);
+      var call = client.compareVariableMappings(revisionCompareRequest);
 
       call.on('data', function(chunk) {
         chunks.push(chunk);
@@ -48,10 +45,10 @@ module.exports = function(RED) {
         msg.payload = chunks;
 
         if(!success) {
-          msg.error = error + errorDetails;
+          msg.error = error + ". " + errorDetails;
         }
 
-        node.send(msg);
+        node.send(msg);  
       });
 
       call.on('error', function(error) {
@@ -59,5 +56,5 @@ module.exports = function(RED) {
       });
     });
   }
-  RED.nodes.registerType("compare-namespaces", CompareNamespacesNode);
+  RED.nodes.registerType("compare-variable-mappings", CompareVariableMappingsNode);
 }
