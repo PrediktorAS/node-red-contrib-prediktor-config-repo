@@ -28,7 +28,7 @@ module.exports = function(RED) {
         let success = false;
         let error = '';
         let errorDetails = '';
-        
+
         for(var i = 0; i < chunks.length; i++) {
           if(chunks[i]?.success !== undefined) {
             success = chunks[i].success;
@@ -45,7 +45,7 @@ module.exports = function(RED) {
         msg.payload = chunks;
 
         if(!success) {
-          msg.error = error + errorDetails;
+          msg.error = error + ". " + errorDetails;
         }
 
         node.send(msg);  
