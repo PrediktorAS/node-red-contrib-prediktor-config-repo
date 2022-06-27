@@ -7,11 +7,8 @@ module.exports = function(RED) {
         this.serverUri = config.serverUri;
 
         node.on('input', function(msg) {
-
             let serverUri = msg.serverUri || node.serverUri;
-
-            const uri = serverUri
-            const client = utils.getClient(uri);
+            const client = utils.getClient(serverUri);
 
             client.ping({}, function(err, data){
                 msg.payload = data;
