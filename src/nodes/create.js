@@ -3,7 +3,7 @@ module.exports = function(RED) {
   function CreateNodeNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    this.server = RED.nodes.getNode(config.server);
+    this.serverUri = config.serverUri;
 
     node.on('input', function(msg) {
       const parentId = msg.parentId || config.parentId;
@@ -45,7 +45,7 @@ module.exports = function(RED) {
         }
       }
 
-      const url = node.server.host + ":" + node.server.port;
+      const url = msg.serverUri || config.serverUri;
       const client = utils.getClient(url);
 
       client.createNode(nodeRequest, function(err, data) {
