@@ -7,7 +7,7 @@ module.exports = function(RED) {
     function uploadContentNode(config) {
         RED.nodes.createNode(this, config);
         const node = this;
-        this.server = RED.nodes.getNode(config.server);
+        this.serverUri = config.serverUri;
 
         node.on('input', function(msg) {
 
@@ -38,7 +38,7 @@ module.exports = function(RED) {
             }
 
             const method = config.contentType == "Binary" ? "uploadBinaryContent" : "uploadTextContent";
-            const url = node.server.host+":"+node.server.port;
+            const url = config.serverUri || msg.serverUri;
             const client = utils.getClient(url);
 
             function runUploadInChunks() {
