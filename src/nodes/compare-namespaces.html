@@ -6,7 +6,7 @@
       name: {
         value: ""
       },
-      server: {
+      serverUri: {
         value: "",
        },
       baseRevisionId: {
@@ -34,8 +34,8 @@
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
   <div class="form-row">
-    <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
-    <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+    <label for="node-input-serverUri"><i class="fa fa-serverUri"></i> Server URI</label>
+    <input type="text" id="node-input-serverUri" placeholder="Server URI (ex. localhost:5001)">
   </div>
   <div class="form-row">
     <label for="node-input-baseRevisionId"><i class="fa fa-link"></i> Base Revision Id</label>
@@ -56,6 +56,7 @@
   <h3>Details</h3>
   <b>Allowed input</b>
   <ul>
+    <li><code>msg.serverUri</code> The URI of the config repo. <br/>Example: <code>localhost:8237</code></li>
     <li><code>msg.baseRevisionId</code> The Id (string) of the base revision</li>
     <li><code>msg.compareRevisionId</code> The Id (string) of the revision to compare the base with</li>
     <li><code>msg.excludeValueSourceAttributes</code> A boolean to set if you want to exclude value source attributes</li>

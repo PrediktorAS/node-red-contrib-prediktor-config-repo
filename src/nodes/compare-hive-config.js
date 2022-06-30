@@ -3,7 +3,7 @@ module.exports = function(RED) {
   function CompareConfigNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    this.server = config.server;
+    this.serverUri = config.serverUri;
     this.baseRevisionId = config.baseRevisionId;
     this.compareRevisionId = config.compareRevisionId;
     this.hiveName = config.hiveName;
@@ -15,7 +15,7 @@ module.exports = function(RED) {
         InstanceName: msg.hiveName || node.hiveName
       };
 
-      const url = msg.server || node.server;
+      const url = msg.serverUri || node.serverUri;
       const client = utils.getClient(url);
 
       var chunks = [];

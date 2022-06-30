@@ -6,7 +6,7 @@
       name: {
         value: ""
       },
-      server: {
+      serverUri: {
         value: "",
       },
       parentId: {
@@ -60,8 +60,8 @@
 
 <script type="text/html" data-template-name="create">
   <div class="form-row">
-    <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
-    <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+    <label for="node-input-serverUri"><i class="fa fa-bookmark"></i> Server URI</label>
+    <input type="text" id="node-input-serverUri" placeholder="Server URI (ex. localhost:5001)">
   </div>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -123,6 +123,7 @@
   <p>
     <b>Allowed input</b>
     <ul>
+      <li><code>msg.serverUri</code> The URI of the config repo. <br/>Example: <code>localhost:8237</code></li>
       <li><code>msg.parentId</code> The Id of the Parent Node (leave blank if you want to create a Root folder)</li>
       <li><code>msg.nodeName</code> The name of the Node</li>
       <li><code>msg.description</code> The description of the Node</li>

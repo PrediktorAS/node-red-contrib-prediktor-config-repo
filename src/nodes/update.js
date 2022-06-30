@@ -17,6 +17,7 @@ module.exports = function(RED) {
         const backupSetId = msg.backupSetId || config.backupSetId;
         const nodeTypeId = parseInt(nodeType);
         const revisionTypeId = parseInt(revisionType);
+        const url = msg.serverUri || config.serverUri;
 
         let nodeRequest = {
           parentId: {
@@ -44,8 +45,7 @@ module.exports = function(RED) {
             backupSetId: backupSetId
           }
         }
-
-        const url = msg.serverUri || config.serverUri;
+        
         const client = utils.getClient(url);
 
         client.updateNode(nodeRequest, function(err, data) {
