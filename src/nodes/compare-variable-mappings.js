@@ -3,7 +3,7 @@ module.exports = function(RED) {
   function CompareVariableMappingsNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    this.server = RED.nodes.getNode(config.server);
+    this.serverUri = config.serverUri;
     this.baseRevisionId = config.baseRevisionId;
     this.compareRevisionId = config.compareRevisionId;
 
@@ -13,7 +13,7 @@ module.exports = function(RED) {
         compareRevisionId: { id: msg.compareRevisionId || node.compareRevisionId }
       };
 
-      const url = node.server.host + ":" + node.server.port;
+      const url = msg.serverUri || node.serverUri
       const client = utils.getClient(url);
 
       var chunks = [];

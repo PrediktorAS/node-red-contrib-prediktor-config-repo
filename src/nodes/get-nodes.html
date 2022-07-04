@@ -6,10 +6,9 @@
       name: {
         value: ""
       },
-      server: {
+      serverUri: {
         value: "",
-        type: "prediktor-config-repository"
-      },
+        },
       parentId: {
         value: ""
       }
@@ -25,8 +24,8 @@
 
 <script type="text/html" data-template-name="get-nodes">
   <div class="form-row">
-    <label for="node-input-server"><i class="fa fa-bookmark"></i> Server</label>
-    <input type="text" id="node-input-server" placeholder="Server URL (ex. localhost:5001)">
+    <label for="node-input-serverUri"><i class="fa fa-bookmark"></i> Server</label>
+    <input type="text" id="node-input-serverUri" placeholder="Server URI (ex. localhost:5001)">
   </div>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -45,6 +44,7 @@
   <p>
     <b>Allowed input</b>
     <ul>
+      <li><code>msg.serverUri</code> The URI of the config repo. <br/>Example: <code>localhost:8237</code></li>
       <li><code>msg.parentId</code> The Id of the Parent Node you are requesting the children of</li>
     </ul>
 

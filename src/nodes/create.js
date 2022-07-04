@@ -3,7 +3,7 @@ module.exports = function(RED) {
   function CreateNodeNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    this.server = RED.nodes.getNode(config.server);
+    this.serverUri = config.serverUri;
 
     node.on('input', function(msg) {
       const parentId = msg.parentId || config.parentId;
@@ -17,6 +17,7 @@ module.exports = function(RED) {
       const backupSetId = msg.backupSetId || config.backupSetId;
       const nodeTypeId = parseInt(nodeType);
       const revisionTypeId = parseInt(revisionType);
+      const url = msg.serverUri || config.serverUri;
 
       let nodeRequest = {
         parentId: {
@@ -44,8 +45,7 @@ module.exports = function(RED) {
           backupSetId: backupSetId
         }
       }
-
-      const url = node.server.host + ":" + node.server.port;
+      
       const client = utils.getClient(url);
 
       client.createNode(nodeRequest, function(err, data) {

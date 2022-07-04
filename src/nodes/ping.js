@@ -1,13 +1,14 @@
 let utils = require('../utils/grpc');
+
 module.exports = function(RED) {
     function PingNode(config) {
         RED.nodes.createNode(this,config);
         var node = this;
-        this.server = RED.nodes.getNode(config.server);
+        this.serverUri = config.serverUri;
 
         node.on('input', function(msg) {
-            const url = node.server.host+":"+node.server.port;
-            const client = utils.getClient(url);
+            let serverUri = msg.serverUri || node.serverUri;
+            const client = utils.getClient(serverUri);
 
             client.ping({}, function(err, data){
                 msg.payload = data;

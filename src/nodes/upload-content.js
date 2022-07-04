@@ -7,7 +7,7 @@ module.exports = function(RED) {
     function uploadContentNode(config) {
         RED.nodes.createNode(this, config);
         const node = this;
-        this.server = RED.nodes.getNode(config.server);
+        this.serverUri = config.serverUri;
 
         node.on('input', function(msg) {
 
@@ -18,6 +18,7 @@ module.exports = function(RED) {
 
             const nodeId = config.nodeId || msg.nodeId;
             const fileName = config.fileName || msg.fileName;
+            const url = config.serverUri || msg.serverUri;
 
             if(!nodeId) {
                 msg.error = 'No nodeId specified. Upload content failed';
@@ -38,7 +39,6 @@ module.exports = function(RED) {
             }
 
             const method = config.contentType == "Binary" ? "uploadBinaryContent" : "uploadTextContent";
-            const url = node.server.host+":"+node.server.port;
             const client = utils.getClient(url);
 
             function runUploadInChunks() {

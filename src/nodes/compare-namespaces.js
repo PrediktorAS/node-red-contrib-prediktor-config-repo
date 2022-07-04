@@ -3,7 +3,7 @@ module.exports = function(RED) {
   function CompareNamespacesNode(config) {
     RED.nodes.createNode(this, config);
     var node = this;
-    this.server = RED.nodes.getNode(config.server);
+    this.serverUri = config.serverUri;
     this.baseRevisionId = config.baseRevisionId;
     this.compareRevisionId = config.compareRevisionId;
     this.excludeValueSourceAttributes = config.excludeValueSourceAttributes;
@@ -16,7 +16,7 @@ module.exports = function(RED) {
         excludeValueSourceAttributes: msg.excludeValueSourceAttributes || node.excludeValueSourceAttributes
       };
 
-      const url = node.server.host + ":" + node.server.port;
+      const url = msg.serverUri || node.serverUri
       const client = utils.getClient(url);
 
       var chunks = [];
