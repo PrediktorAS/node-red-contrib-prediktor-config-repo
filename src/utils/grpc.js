@@ -2,7 +2,7 @@
 const grpc = require("@grpc/grpc-js");
 const loader = require("@grpc/proto-loader");
 
-protoFileName = __dirname+"/../protobuf/ConfigurationRepository.proto";
+protoFileName = __dirname+"/../protobuf/ConfigRepository.proto";
 
 const options = {
   keepCase: true,
@@ -14,10 +14,10 @@ const options = {
 
 var packageDefinition = loader.loadSync(protoFileName, options);
 var protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-var configurationrepository = protoDescriptor.ConfigurationRepository;
+var configurationrepository = protoDescriptor.ConfigRepository;
 
 function getClient(url){
-    const client = new configurationrepository.ConfigurationRepository(
+    const client = new configurationrepository.ConfigRepository(
         url, grpc.credentials.createInsecure());
     return client;
 }
